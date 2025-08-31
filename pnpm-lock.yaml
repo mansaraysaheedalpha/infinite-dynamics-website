@@ -20,6 +20,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.3
         version: 1.2.3(@types/react@19.1.12)(react@19.1.0)
+      '@tsparticles/engine':
+        specifier: ^3.9.1
+        version: 3.9.1
       '@upstash/ratelimit':
         specifier: ^2.0.6
         version: 2.0.6(@upstash/redis@1.35.3)
@@ -630,6 +633,9 @@ packages:
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
+
+  '@tsparticles/engine@3.9.1':
+    resolution: {integrity: sha512-DpdgAhWMZ3Eh2gyxik8FXS6BKZ8vyea+Eu5BC4epsahqTGY9V3JGGJcXC6lRJx6cPMAx1A0FaQAojPF3v6rkmQ==}
 
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
@@ -2736,6 +2742,8 @@ snapshots:
   '@swc/helpers@0.5.15':
     dependencies:
       tslib: 2.8.1
+
+  '@tsparticles/engine@3.9.1': {}
 
   '@tybys/wasm-util@0.10.0':
     dependencies:
