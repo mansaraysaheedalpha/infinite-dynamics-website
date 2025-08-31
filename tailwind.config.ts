@@ -1,26 +1,19 @@
 // tailwind.config.ts
-
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // Replace your 'content' array with this one
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    // This single line is all we need for a `src`-based project
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
-        "brand-primary": "#1E3A8A", // A nice deep blue
-        "brand-secondary": "#3B82F6", // A brighter, vibrant blue
-        "brand-yellow": "#F59E0B", // The primary gold/yellow color
+        // Define your brand colors here
+        "brand-primary": "#0D253F", // A deep, professional blue
+        "brand-secondary": "#163A5F", // A slightly lighter blue
+        "brand-yellow": "#FFC700", // The vibrant brand yellow
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -29,7 +22,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
 
 export default config;

@@ -2,11 +2,13 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation"; // Import usePathname hook
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { Menu, X } from "lucide-react"; // Import icons
-import MobileNav from "./MobileNav"; // Import the new component
+import { Menu, X } from "lucide-react";
+import MobileNav from "./MobileNav";
+import { cn } from "@/lib/utils"; // Import our cn utility
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -19,41 +21,43 @@ const navLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get the current URL path
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-sm">
-        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Logo */}
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
+        <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo - Updated to use the new transparent PNG */}
           <Link href="/" className="flex items-center" onClick={closeMenu}>
             <Image
-              src="/logo.jpg"
+              src="/logo_5.png" // Use the new logo
               alt="Infinite Dynamics Logo"
-              width={48}
-              height={48}
-              className="h-10 w-auto"
+              width={150} // Increased width for better clarity
+              height={70}
+              className="h-auto" // Control size with Tailwind
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden items-center space-x-6 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-600 transition-colors hover:text-brand-yellow"
-              >
-                {link.label}
-              </Link>
-            ))}
+          {/* Desktop Navigation - Updated styling */}
+          <nav className="hidden items-center space-x-8 md:flex">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "border-b-2 pb-1 text-base font-semibold text-brand-secondary transition-all duration-300 hover:border-brand-yellow hover:text-brand-secondary/80",
+                    isActive ? "border-brand-yellow" : "border-transparent"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop CTA Button */}
@@ -65,16 +69,15 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="rounded-md p-2 text-gray-700 transition-colors hover:text-brand-yellow"
+              className="rounded-md p-2 text-brand-primary transition-colors hover:text-brand-yellow"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Conditionally render MobileNav */}
       {isMenuOpen && <MobileNav links={navLinks} onClose={closeMenu} />}
     </>
   );
