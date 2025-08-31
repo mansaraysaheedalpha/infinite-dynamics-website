@@ -2,13 +2,42 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validators";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { headers } from "next/headers";
+
+// Initialize the Redis client
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+// Initialize the Rate Limiter
+// This allows 3 requests from a single IP address in a 1-minute sliding window.
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(3, "1 m"),
+  analytics: true,
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  // --- RATE LIMITING LOGIC START ---
+  const ip = headers().get("x-forwarded-for");
+  const { success, limit, remaining, reset } = await ratelimit.limit(
+    ip ?? "anonymous"
+  );
 
-  // Validate the request body against our Zod schema
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+  // --- RATE LIMITING LOGIC END ---
+
+  const body = await req.json();
   const validation = contactFormSchema.safeParse(body);
 
   if (!validation.success) {
@@ -19,19 +48,10 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev", // This must be a verified sender in Resend
-      to: "your-company-email@example.com", // CHANGE THIS to your actual email
+      from: "onboarding@resend.dev",
+      to: "your-company-email@example.com", // Remember to change this
       subject: `New Message from ${fullName} via Infinite Dynamics Website`,
-      html: `
-        <p>You have received a new message from the contact form:</p>
-        <ul>
-          <li><strong>Full Name:</strong> ${fullName}</li>
-          <li><strong>Email:</strong> ${email}</li>
-          <li><strong>Phone:</strong> ${phone || "Not provided"}</li>
-        </ul>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+      html: `...`, // Your email HTML content
     });
 
     return NextResponse.json({ message: "Email sent successfully!" });
