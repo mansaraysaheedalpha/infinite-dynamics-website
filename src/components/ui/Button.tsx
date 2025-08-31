@@ -13,10 +13,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-brand-yellow text-brand-primary hover:bg-brand-yellow/90",
+        // KEEP this one, our new custom variant
+        outline:
+          "border border-brand-yellow bg-transparent text-white hover:bg-brand-yellow hover:text-brand-primary",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        // DELETE the duplicate 'outline' that was here
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
