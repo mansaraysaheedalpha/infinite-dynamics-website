@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"; // Import usePathname hook
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { Menu, X } from "lucide-react";
+import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
 import MobileNav from "./MobileNav";
 import { cn } from "@/lib/utils"; // Import our cn utility
 
@@ -72,7 +72,11 @@ const Header = () => {
               className="rounded-md p-2 text-brand-primary transition-colors hover:text-brand-yellow"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {isMenuOpen ? (
+                <HiOutlineXMark className="h-7 w-7" />
+              ) : (
+                <HiOutlineBars3 className="h-7 w-7" />
+              )}
             </button>
           </div>
         </div>
