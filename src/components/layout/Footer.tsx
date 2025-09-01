@@ -19,8 +19,7 @@ const Footer = () => {
     <footer className="bg-brand-primary border-t border-brand-secondary/50 text-white">
       <div className="relative z-10">
         <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
-          {/* === Top Section: Call to Connection === */}
-          <div className="text-center mb-16 border-b border-brand-secondary/30 pb-12">
+          <div className="text-center mb-12 md:mb-16 border-b border-brand-secondary/30 pb-12">
             <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
               Ready to Build the Future?
             </h2>
@@ -38,9 +37,8 @@ const Footer = () => {
             </Button>
           </div>
 
-          {/* === Main Grid: The Information Matrix === */}
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-10">
-            <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-10 md:gap-12 text-center md:text-left">
+            <div className="lg:col-span-3 flex flex-col items-center md:items-start">
               <Link href="/" className="inline-block mb-4">
                 <Image
                   src="/logo_5.png"
@@ -55,7 +53,7 @@ const Footer = () => {
                 high-performance software solutions.
               </p>
             </div>
-            <div className="lg:col-span-2">
+            <div className="md:col-span-1 lg:col-span-2">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-yellow">
                 Solutions
               </h3>
@@ -72,7 +70,7 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-            <div className="lg:col-span-2">
+            <div className="md:col-span-1 lg:col-span-2">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-yellow">
                 Company
               </h3>
@@ -89,7 +87,7 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-            <div className="lg:col-span-3">
+            <div className="md:col-span-2 lg:col-span-3 flex flex-col items-center md:items-start">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-yellow">
                 Connect With Us
               </h3>
@@ -121,10 +119,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
-        {/* === Bottom Bar: The Foundation === */}
         <div className="bg-brand-secondary/30 py-6">
-          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-center text-sm text-gray-400">
             <p>
               &copy; {new Date().getFullYear()} Infinite Dynamics. All rights
               reserved.
