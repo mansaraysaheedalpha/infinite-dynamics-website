@@ -39,3 +39,28 @@ export const applicationSchema = z.object({
 
 export type TApplicationForm = z.infer<typeof applicationSchema>;
 
+
+export const projectIntakeSchema = z.object({
+  // Step 1
+  fullName: z.string().min(2, "Full name is required"),
+  companyName: z.string().optional(),
+  email: z.string().email("Please enter a valid email address"),
+
+  // Step 2
+  projectName: z.string().min(3, "Project name is required"),
+  service: z.enum([
+    "Web & Mobile Development",
+    "UI/UX & Graphics Design",
+    "Cloud & DevOps",
+    "Corporate Training",
+    "Other",
+  ]),
+  projectDescription: z
+    .string()
+    .min(30, "Please provide a detailed description (at least 30 characters)"),
+
+  // Step 3
+  budget: z.string().min(1, "Please select a budget range"),
+});
+
+export type TProjectIntake = z.infer<typeof projectIntakeSchema>;
