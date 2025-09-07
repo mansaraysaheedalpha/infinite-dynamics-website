@@ -1,0 +1,92 @@
+// src/app/insights/[slug]/page.tsx
+
+import { sanityClient, urlFor } from "@/lib/sanity";
+import Image from "next/image";
+import PortableTextComponent from "@/components/PortableTextComponent";
+import { Metadata } from "next";
+
+// GROQ query to get a single post by its slug
+const postQuery = `*[_type == "post" && slug.current == $slug][0] {
+    title,
+    subtitle,
+    "mainImage": mainImage,
+    body,
+    "publishedAt": publishedAt,
+    "author": author->{name, "image": image}
+}`;
+
+// This function tells Next.js which pages to build at build time
+export async function generateStaticParams() {
+  const posts = await sanityClient.fetch<any[]>(
+    `*[_type == "post"]{"slug": slug.current}`
+  );
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// This function generates metadata for each page (great for SEO)
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+  return {
+    title: `${post.title} | Infinite Insights`,
+    description: post.subtitle,
+  };
+}
+
+const ArticlePage = async ({ params }: { params: { slug: string } }) => {
+  // Fetch the specific post based on the slug from the URL
+  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+
+  return (
+    <div>
+      {/* The PageHeader for articles will be the main image */}
+      <section className="relative h-[50vh] w-full overflow-hidden">
+        <Image
+          src={urlFor(post.mainImage).width(1920).url()}
+          alt={post.title}
+          fill
+          className="object-cover z-0"
+        />
+        <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10" />
+        <div className="relative z-20 container mx-auto flex h-full flex-col items-center justify-center text-center text-white">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow-md">
+            {post.title}
+          </h1>
+          <div className="mt-6 flex items-center gap-4">
+            <Image
+              src={urlFor(post.author.image).width(96).url()}
+              alt={post.author.name}
+              width={48}
+              height={48}
+              className="rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="font-semibold">{post.author.name}</p>
+              <p className="text-sm text-gray-300">
+                {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Article Content */}
+      <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <article className="prose prose-invert lg:prose-xl max-w-3xl mx-auto">
+          <PortableTextComponent value={post.body} />
+        </article>
+      </main>
+    </div>
+  );
+};
+
+export default ArticlePage;
