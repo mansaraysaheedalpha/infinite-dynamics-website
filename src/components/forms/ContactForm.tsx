@@ -1,4 +1,5 @@
 // src/components/forms/ContactForm.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -6,12 +7,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TContactForm, contactFormSchema } from "@/lib/validators";
 import { Button } from "@/components/ui/Button";
+import { sendContactEmail } from "@/app/actions";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 const ContactForm = () => {
   const [submissionStatus, setSubmissionStatus] =
     useState<SubmissionStatus>("idle");
+  const [serverMessage, setServerMessage] = useState("");
 
   const {
     register,
@@ -22,41 +25,38 @@ const ContactForm = () => {
     resolver: zodResolver(contactFormSchema),
   });
 
+  // This is the updated submission logic
   const onSubmit = async (data: TContactForm) => {
     setSubmissionStatus("submitting");
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    setServerMessage(""); // Clear previous messages
 
-      if (!response.ok) {
-        throw new Error("Failed to send message.");
-      }
+    const result = await sendContactEmail(data); // Call the Server Action
 
+    if (result.success) {
       setSubmissionStatus("success");
+      setServerMessage(result.message);
       reset(); // Clear the form fields
-    } catch (error) {
-      console.error(error);
+    } else {
       setSubmissionStatus("error");
+      setServerMessage(result.message);
     }
   };
 
+  // The success message is now handled by the main form to avoid layout shifts
   if (submissionStatus === "success") {
     return (
       <div className="rounded-md bg-green-100 p-4 text-center text-green-800">
         <h4 className="font-bold">Message Sent!</h4>
-        <p>Thank you for reaching out. We'll get back to you shortly.</p>
+        <p>
+          {serverMessage ||
+            "Thank you for reaching out. We'll get back to you shortly."}
+        </p>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* ... (input fields remain the same) ... */}
       <div>
         <label htmlFor="fullName" className="sr-only">
           Full Name
@@ -72,6 +72,7 @@ const ContactForm = () => {
           <p className="mt-1 text-sm text-red-400">{errors.fullName.message}</p>
         )}
       </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="email" className="sr-only">
@@ -101,6 +102,7 @@ const ContactForm = () => {
           />
         </div>
       </div>
+
       <div>
         <label htmlFor="message" className="sr-only">
           Message
@@ -116,6 +118,7 @@ const ContactForm = () => {
           <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
         )}
       </div>
+
       <Button
         type="submit"
         className="w-full"
@@ -123,9 +126,10 @@ const ContactForm = () => {
       >
         {submissionStatus === "submitting" ? "Sending..." : "Send Message"}
       </Button>
+
       {submissionStatus === "error" && (
         <p className="mt-2 text-center text-sm text-red-400">
-          Something went wrong. Please try again.
+          {serverMessage || "Something went wrong. Please try again."}
         </p>
       )}
     </form>
