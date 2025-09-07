@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // 1. Import useEffect
 import {
   Popover,
   PopoverContent,
@@ -24,29 +24,49 @@ interface ShareButtonProps {
 
 export const ShareButton = ({ title, slug }: ShareButtonProps) => {
   const [copied, setCopied] = useState(false);
+  const [url, setUrl] = useState(""); // 2. Store the URL in state, initially empty
 
-  // Construct the full URL for sharing
-  const url = `${window.location.origin}/careers/${slug}`;
+  // 3. Use useEffect to safely access `window` only on the client
+  useEffect(() => {
+    // This code runs only in the browser after the component mounts
+    const fullUrl = `${window.location.origin}/careers/${slug}`;
+    setUrl(fullUrl);
+  }, [slug]); // Dependency array ensures this runs if the slug ever changes
 
   const shareOptions = [
     {
       name: "LinkedIn",
       icon: <Linkedin className="h-5 w-5" />,
-      url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+        url
+      )}&title=${encodeURIComponent(title)}`,
     },
     {
       name: "Twitter",
       icon: <Twitter className="h-5 w-5" />,
-      url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+      url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(title)}`,
     },
   ];
 
   const handleCopy = () => {
+    if (!url) return; // Guard against copying an empty URL
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+      setTimeout(() => setCopied(false), 2000);
     });
   };
+
+  // We can disable the button until the URL is ready on the client
+  if (!url) {
+    return (
+      <Button variant="outline" disabled>
+        <Share2 className="mr-2 h-4 w-4" />
+        Share this role
+      </Button>
+    );
+  }
 
   return (
     <Popover>

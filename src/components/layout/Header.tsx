@@ -34,7 +34,6 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* This main div is now a 3-item flex container on desktop */}
       <div className="container mx-auto flex h-20 items-center justify-between">
-        
         {/* === ITEM 1: LOGO === */}
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -48,7 +47,9 @@ const Header = () => {
         {/* === ITEM 2: DESKTOP NAVIGATION (now separate) === */}
         <div className="hidden md:flex">
           <NavigationMenu>
-            <NavigationMenuList className="gap-2"> {/* Added gap for spacing between nav items */}
+            <NavigationMenuList className="gap-2">
+              {" "}
+              {/* Added gap for spacing between nav items */}
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -59,7 +60,9 @@ const Header = () => {
                         className={cn(
                           "border-b-2 pb-1 text-base font-semibold text-brand-secondary transition-all duration-300 hover:border-brand-yellow hover:text-brand-secondary/80",
                           "bg-transparent px-3 py-2",
-                          isActive ? "border-brand-yellow" : "border-transparent"
+                          isActive
+                            ? "border-brand-yellow"
+                            : "border-transparent"
                         )}
                       >
                         {link.label}
@@ -68,7 +71,6 @@ const Header = () => {
                   </NavigationMenuItem>
                 );
               })}
-
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="border-b-2 border-transparent pb-1 text-base font-semibold text-brand-secondary">
                   Solutions
@@ -82,8 +84,12 @@ const Header = () => {
                             href={`/solutions/${service.slug}`}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
-                            <div className="text-sm font-medium leading-none">{service.title}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{service.description}</p>
+                            <div className="text-sm font-medium leading-none">
+                              {service.title}
+                            </div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              {service.description}
+                            </p>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -94,12 +100,13 @@ const Header = () => {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        
+
         {/* === ITEM 3: GET STARTED BUTTON (now separate) === */}
         <div className="hidden md:flex">
-          <Button>Get Started</Button>
+          <Button asChild size="lg" className="w-full">
+            <Link href="/get-started">Get Started</Link>
+          </Button>
         </div>
-
 
         {/* Mobile Navigation */}
         <div className="md:hidden">
