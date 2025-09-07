@@ -18,7 +18,11 @@ export async function generateMetadata({
   };
 }
 
-const JobDetailPage = async ({ params }: { params: { slug: string } }) => {
+type Props = {
+  params: { slug: string };
+}
+
+const JobDetailPage = async ({ params }: Props ) => {
   const job = await sanityClient.fetch<any>(jobQuery, { slug: params.slug });
 
   // Server component fetches data and passes it to the client component for rendering
