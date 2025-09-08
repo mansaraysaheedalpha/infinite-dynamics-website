@@ -3,34 +3,44 @@
 import { sanityClient } from "@/lib/sanity";
 import { Metadata } from "next";
 import JobDetailClientView from "@/components/careers/JobDetailClientView";
-import { SanityJob  } from "@/types";
+import { SanityJob } from "@/types";
 
 const jobQuery = `*[_type == "job" && slug.current == $slug][0]`;
 
+// This props type is for generateMetadata
+type MetadataProps = {
+  params: { slug: string };
+};
+
 export async function generateMetadata({
   params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+}: MetadataProps): Promise<Metadata> {
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
     slug: params.slug,
   });
   return {
-    title: `${job.title} | Careers at Infinite Dynamics`,
-    description: `Apply for the ${job.title} position at Infinite Dynamics.`,
+    title: `${job?.title || "Career"} | Infinite Dynamics`,
+    description: `Apply for the ${
+      job?.title || "position"
+    } at Infinite Dynamics.`,
   };
 }
 
-type Props = {
+// This props type is for the page component itself
+type PageProps = {
   params: { slug: string };
-}
+};
 
-const JobDetailPage = async ({ params }: Props ) => {
+const JobDetailPage = async ({ params }: PageProps) => {
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
     slug: params.slug,
   });
 
-  // Server component fetches data and passes it to the client component for rendering
+  if (!job) {
+    // Handle the case where the job is not found
+    return <div>Job not found.</div>;
+  }
+
   return <JobDetailClientView job={job} />;
 };
 
