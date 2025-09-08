@@ -1,26 +1,21 @@
 // src/app/careers/[slug]/page.tsx
 
 import { sanityClient } from "@/lib/sanity";
-import { Metadata, ResolvingMetadata } from "next"; // 1. Import ResolvingMetadata
+import { Metadata } from "next";
 import JobDetailClientView from "@/components/careers/JobDetailClientView";
 import { SanityJob } from "@/types";
 
 const jobQuery = `*[_type == "job" && slug.current == $slug][0]`;
 
-// 2. Define a shared props type
-type Props = {
+// Using a simple, direct type for props
+export async function generateMetadata({
+  params,
+}: {
   params: { slug: string };
-};
-
-// 3. Use the correct, full signature for generateMetadata
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+}): Promise<Metadata> {
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
     slug: params.slug,
   });
-
   return {
     title: `${job?.title || "Career"} | Infinite Dynamics`,
     description: `Apply for the ${
@@ -29,8 +24,12 @@ export async function generateMetadata(
   };
 }
 
-// 4. Use the same shared Props type for the page component
-export default async function JobDetailPage({ params }: Props) {
+// Using the same simple, direct type for the page component props
+export default async function JobDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
     slug: params.slug,
   });
