@@ -2,6 +2,8 @@
 
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+// 1. Import SanityImage, not SanitySlug
+import { SanityImage } from "@/types";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!;
@@ -16,6 +18,7 @@ export const sanityClient = createClient({
 
 const builder = imageUrlBuilder(sanityClient);
 
-export function urlFor(source: any) {
+// 2. Use the correct type in the function signature
+export function urlFor(source: SanityImage) {
   return builder.image(source);
 }

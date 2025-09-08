@@ -1,5 +1,7 @@
 // src/types/index.ts
 
+import { PortableTextBlock } from "@portabletext/types";
+
 export interface SanitySlug {
   current: string;
 }
@@ -20,22 +22,21 @@ export interface SanityAuthor {
 export interface SanityPost {
   _id: string;
   title: string;
+  subtitle?: string;
   slug: SanitySlug;
   author: SanityAuthor;
   mainImage: SanityImage;
   category: string;
   publishedAt: string;
-  body: any[]; // Portable Text is complex, `any` is acceptable here for now
+  body: PortableTextBlock[]; // Portable Text is complex, `any` is acceptable here for now
 }
 
-export interface SanityPost {
+export interface SanityJob {
   _id: string;
   title: string;
-  subtitle?: string; // <-- ADD THIS LINE
   slug: SanitySlug;
-  author: SanityAuthor;
-  mainImage: SanityImage;
-  category: string;
-  publishedAt: string;
-  body: any[];
+  department: string;
+  location: string;
+  type?: string;
+  description: PortableTextBlock[]; // Portable Text
 }

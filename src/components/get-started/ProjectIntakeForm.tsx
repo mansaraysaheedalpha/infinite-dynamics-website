@@ -88,7 +88,7 @@ const ProjectIntakeForm = () => {
     <div className="max-w-3xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Let's Talk About Your Project
+          Let&apos;s Talk About Your Project
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           This helps us understand your needs so we can have a productive first

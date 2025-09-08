@@ -57,7 +57,7 @@ const ConsultationSection = () => {
           </ul>
           <p className="text-muted-foreground pt-4">
             This is your opportunity to leverage our expertise and gain clarity
-            on your project's direction.
+            on your project&apos;s direction.
           </p>
         </motion.div>
 

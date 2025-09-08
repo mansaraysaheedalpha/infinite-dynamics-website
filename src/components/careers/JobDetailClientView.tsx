@@ -16,8 +16,9 @@ import {
 import { useState } from "react";
 import { ApplicationForm } from "./ApplicationForm";
 import { ShareButton } from "./ShareButton";
+import { SanityJob } from "@/types";
 
-const JobDetailClientView = ({ job }: { job: any }) => {
+const JobDetailClientView = ({ job }: { job: SanityJob }) => {
    const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
     <div className="bg-background text-foreground">
@@ -102,7 +103,7 @@ const JobDetailClientView = ({ job }: { job: any }) => {
                 Apply for this role
               </h3>
               <p className="mt-2 text-muted-foreground">
-                Ready to make an impact? We'd love to hear from you.
+                Ready to make an impact? We&apos;d love to hear from you.
               </p>
 
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
