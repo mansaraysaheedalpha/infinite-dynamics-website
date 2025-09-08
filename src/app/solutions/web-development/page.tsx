@@ -70,7 +70,7 @@ const WebDevelopmentPage = () => {
           <p className="text-lg text-muted-foreground">
             {" "}
             {/* Corrected text color */}
-            At Infinite Dynamics, we don't just write code; we architect
+            At Infinite Dynamics, we don&apos;t just write code; we architect
             solutions. Our philosophy is rooted in a deep understanding of your
             business objectives, ensuring that every line of code serves a
             purpose and every feature delivers value. We build digital products
@@ -171,7 +171,7 @@ const WebDevelopmentPage = () => {
         <p className="mt-2 text-lg text-gray-300">
           {" "}
           {/* Corrected text color */}
-          Let's discuss how we can bring your vision to life.
+          Let&apos;s discuss how we can bring your vision to life.
         </p>
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Contact Us Today</Link>

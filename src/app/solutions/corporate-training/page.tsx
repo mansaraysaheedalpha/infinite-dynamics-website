@@ -71,8 +71,8 @@ const CorporateTrainingPage = () => {
             Investing in Your People
           </h2>
           <p className="text-lg text-muted-foreground">
-            In a rapidly evolving digital world, your team's skill set is your
-            greatest asset. Our corporate training programs are designed to
+            In a rapidly evolving digital world, your team&apos;s skill set is
+            your greatest asset. Our corporate training programs are designed to
             upskill and empower your workforce, transforming them into a more
             efficient, innovative, and competitive team. We bridge the gap
             between existing knowledge and future needs.
@@ -164,7 +164,7 @@ const CorporateTrainingPage = () => {
           Ready to Upskill Your Team?
         </h2>
         <p className="mt-2 text-lg text-muted-foreground">
-          Let's design a custom training program that fits your needs.
+          Let&apos;s design a custom training program that fits your needs.
         </p>
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Request a Consultation</Link>

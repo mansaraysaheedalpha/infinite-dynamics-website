@@ -157,7 +157,7 @@ const CloudDevopsPage = () => {
       >
         <h2 className="text-3xl font-bold text-foreground">Ready to Scale?</h2>
         <p className="mt-2 text-lg text-muted-foreground">
-          Let's build a rock-solid foundation for your application.
+          Let&apos;s build a rock-solid foundation for your application.
         </p>
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Optimize My Infrastructure</Link>

@@ -7,6 +7,7 @@ import { FaLightbulb, FaMountain, FaBolt } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Metadata } from "next";
+import { SanityJob } from "@/types";
 
 // SEO & Metadata
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ const values = [
 ];
 
 const CareersPage = async () => {
-  const jobs = await sanityClient.fetch<any[]>(jobsQuery);
+  const jobs = await sanityClient.fetch<SanityJob[]>(jobsQuery);
 
   return (
     <div>
@@ -60,8 +61,8 @@ const CareersPage = async () => {
             Build the Future With Us
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-gray-300 drop-shadow-sm">
-            We're looking for passionate minds to join our mission and shape the
-            future of technology, from Freetown to the world.
+            We&apos;re looking for passionate minds to join our mission and
+            shape the future of technology, from Freetown to the world.
           </p>
         </div>
       </section>
@@ -73,8 +74,8 @@ const CareersPage = async () => {
             Why Join Infinite Dynamics?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-            We're not just building products; we're building a culture of
-            innovation, growth, and global impact. Here, your work matters.
+            We&apos;re not just building products; we&apos;re building a culture
+            of innovation, growth, and global impact. Here, your work matters.
           </p>
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
@@ -109,11 +110,11 @@ const CareersPage = async () => {
         {/* === Final CTA === */}
         <section className="mt-24 bg-card border rounded-lg p-12 text-center">
           <h2 className="text-3xl font-bold text-foreground">
-            Don't See a Role For You?
+            Don&apos;t See a Role For You?
           </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            We're always looking for exceptional talent. Introduce yourself and
-            let's see what we can build together.
+            We&apos;re always looking for exceptional talent. Introduce yourself
+            and let&apos;s see what we can build together.
           </p>
           <Button asChild size="lg" className="mt-6">
             <Link href="/contact">Get in Touch</Link>

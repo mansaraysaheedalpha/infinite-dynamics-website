@@ -34,8 +34,8 @@ const Footer = () => {
               Ready to Build the Future?
             </h2>
             <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-              Let's transform your ideas into reality. Partner with Infinite
-              Dynamics to unlock your potential and create something
+              Let&apos;s transform your ideas into reality. Partner with
+              Infinite Dynamics to unlock your potential and create something
               extraordinary.
             </p>
             <Button
@@ -57,7 +57,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-gray-400 text-sm">
-                Building tomorrow's digital landscape, today. We are a
+                Building tomorrow&apos;s digital landscape, today. We are a
                 collective of innovators dedicated to crafting elegant,
                 high-performance software solutions.
               </p>

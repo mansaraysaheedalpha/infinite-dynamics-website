@@ -43,11 +43,11 @@ const GetStartedPage = () => {
         <div className="absolute inset-0 bg-brand-primary/70 z-10" />
         <div className="relative z-20 container mx-auto px-4">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-            Let's Build Something Remarkable.
+            Let&apos;s Build Something Remarkable.
           </h1>
           <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
             Your vision, engineered with precision and passion. Tell us about
-            your goals, and we'll architect the solution.
+            your goals, and we&apos;ll architect the solution.
           </p>
         </div>
       </motion.section>

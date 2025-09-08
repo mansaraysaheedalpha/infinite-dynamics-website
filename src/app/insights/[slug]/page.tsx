@@ -4,20 +4,23 @@ import { sanityClient, urlFor } from "@/lib/sanity";
 import Image from "next/image";
 import PortableTextComponent from "@/components/PortableTextComponent";
 import { Metadata } from "next";
+import { SanityPost } from "@/types";
 
-// GROQ query to get a single post by its slug
+// Note: Added subtitle to the GROQ query
 const postQuery = `*[_type == "post" && slug.current == $slug][0] {
     title,
-    subtitle,
-    "mainImage": mainImage,
+    subtitle, 
+    mainImage,
     body,
-    "publishedAt": publishedAt,
-    "author": author->{name, "image": image}
+    publishedAt,
+    "author": author->{name, image},
+    "slug": slug.current
 }`;
 
-// This function tells Next.js which pages to build at build time
+// This function tells Next.js which pages to build
 export async function generateStaticParams() {
-  const posts = await sanityClient.fetch<any[]>(
+  // Use a more specific type instead of any[]
+  const posts = await sanityClient.fetch<{ slug: string }[]>(
     `*[_type == "post"]{"slug": slug.current}`
   );
   return posts.map((post) => ({
@@ -25,32 +28,36 @@ export async function generateStaticParams() {
   }));
 }
 
-// This function generates metadata for each page (great for SEO)
+// This function generates metadata for each page
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+  const post = await sanityClient.fetch<SanityPost>(postQuery, {
+    slug: params.slug,
+  });
   return {
     title: `${post.title} | Infinite Insights`,
-    description: post.subtitle,
+    description: post.subtitle || "A deep-dive article from Infinite Dynamics.", // Fallback description
   };
 }
 
 const ArticlePage = async ({ params }: { params: { slug: string } }) => {
-  // Fetch the specific post based on the slug from the URL
-  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+  const post = await sanityClient.fetch<SanityPost>(postQuery, {
+    slug: params.slug,
+  });
 
   return (
     <div>
-      {/* The PageHeader for articles will be the main image */}
+      {/* Page Header */}
       <section className="relative h-[50vh] w-full overflow-hidden">
         <Image
           src={urlFor(post.mainImage).width(1920).url()}
           alt={post.title}
           fill
           className="object-cover z-0"
+          priority // Prioritize loading the hero image
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10" />
         <div className="relative z-20 container mx-auto flex h-full flex-col items-center justify-center text-center text-white">
@@ -82,7 +89,11 @@ const ArticlePage = async ({ params }: { params: { slug: string } }) => {
       {/* Article Content */}
       <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <article className="prose prose-invert lg:prose-xl max-w-3xl mx-auto">
-          <PortableTextComponent value={post.body} />
+          {post.body ? (
+            <PortableTextComponent value={post.body} />
+          ) : (
+            <p>Content is not available.</p>
+          )}
         </article>
       </main>
     </div>

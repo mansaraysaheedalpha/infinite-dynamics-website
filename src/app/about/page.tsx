@@ -69,7 +69,7 @@ const AboutPage = () => {
             experience and ambition across the globe. Founded by a father-son
             duo, we are a testament to the power of global collaboration, fusing
             strategic wisdom with vibrant, self-taught ingenuity to build
-            tomorrow's digital landscape.
+            tomorrow&apos;s digital landscape.
           </p>
         </div>
         <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
