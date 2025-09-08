@@ -84,7 +84,7 @@ export async function sendContactEmail(formData: TContactForm) {
       from: "Infinite Dynamics <contact@infinite-dynamics.com>", // IMPORTANT: Use a verified domain
       to: "saheedamansaray@gmail.com", // Your actual receiving email
       subject: `New Message from ${fullName} via Website`,
-      reply_to: email,
+      replyTo: email,
       html: `
         <p>You received a new message from your website contact form.</p>
         <p><strong>Name:</strong> ${fullName}</p>
@@ -127,7 +127,7 @@ export async function applyForJob(formData: FormData) {
       from: "Infinite Dynamics Careers <careers@yourverifieddomain.com>",
       to: "saheedamansaray@gmail.com",
       subject: `New Application for ${jobTitle}: ${fullName}`,
-      reply_to: email,
+      replyTo: email,
       html: `...`, // Your existing HTML content
       attachments: [
         {

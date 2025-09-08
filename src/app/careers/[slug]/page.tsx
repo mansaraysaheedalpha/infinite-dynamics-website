@@ -11,10 +11,11 @@ const jobQuery = `*[_type == "job" && slug.current == $slug][0]`;
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
-    slug: params.slug,
+    slug: slug,
   });
   return {
     title: `${job?.title || "Career"} | Infinite Dynamics`,
@@ -28,10 +29,11 @@ export async function generateMetadata({
 export default async function JobDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const job = await sanityClient.fetch<SanityJob>(jobQuery, {
-    slug: params.slug,
+    slug: slug,
   });
 
   if (!job) {

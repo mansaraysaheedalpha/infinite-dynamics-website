@@ -44,6 +44,7 @@ const ProjectIntakeForm = () => {
     trigger,
     formState: { errors },
     control, // For the Select component
+    setValue,
   } = useForm<TProjectIntake>({
     resolver: zodResolver(projectIntakeSchema),
   });
@@ -173,7 +174,7 @@ const ProjectIntakeForm = () => {
                   {/* Note: This requires a custom component setup for react-hook-form with shadcn/ui Select */}
                   <Select
                     onValueChange={(value) =>
-                      control._setValue("service", value)
+                      setValue("service", value as TProjectIntake["service"])
                     }
                     name="service"
                   >
@@ -223,7 +224,7 @@ const ProjectIntakeForm = () => {
               <div>
                 <Label>Estimated Budget (USD)</Label>
                 <Select
-                  onValueChange={(value) => control._setValue("budget", value)}
+                  onValueChange={(value) => setValue("budget", value)}
                   name="budget"
                 >
                   <SelectTrigger>

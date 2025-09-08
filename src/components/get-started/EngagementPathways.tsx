@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import { Rocket, CalendarDays, Mail } from "lucide-react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -54,7 +54,7 @@ const EngagementPathways = ({
       transition: {
         delay: i * 0.2,
         duration: 0.6,
-        ease: "easeOut",
+        ease: easeOut,
       },
     }),
   };

@@ -1,5 +1,5 @@
 // eslint.config.mjs
-import nextPlugin from "@next/eslint-plugin-next";
+import nextPlugin from "@next/eslint-plugin-next/dist/index.js";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 const config = [

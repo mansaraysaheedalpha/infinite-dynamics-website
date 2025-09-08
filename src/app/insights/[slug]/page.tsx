@@ -32,10 +32,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
   const post = await sanityClient.fetch<SanityPost>(postQuery, {
-    slug: params.slug,
+    slug: slug,
   });
   return {
     title: `${post.title} | Infinite Insights`,
@@ -43,9 +44,10 @@ export async function generateMetadata({
   };
 }
 
-const ArticlePage = async ({ params }: { params: { slug: string } }) => {
+const ArticlePage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
   const post = await sanityClient.fetch<SanityPost>(postQuery, {
-    slug: params.slug,
+    slug: slug,
   });
 
   return (

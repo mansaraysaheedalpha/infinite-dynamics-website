@@ -28,7 +28,7 @@ const SubscriptionCTA = () => {
          toast.error(result.message);
        }
     } catch (error) {
-      toast.error("An unexpected error occurred.",error);
+      toast.error("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false); // 4. Set loading back to false
     }
