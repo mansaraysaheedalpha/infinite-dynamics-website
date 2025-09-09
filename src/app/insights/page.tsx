@@ -4,6 +4,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { sanityClient } from "@/lib/sanity";
 import InsightsClientPage from "@/components/insights/InsightClientPage";
 import SubscriptionCTA from "@/components/sections/SubscriptionCTA";
+import { SanityPost } from "@/types";
 
 // This is the GROQ query to fetch our posts from Sanity
 const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
@@ -17,7 +18,7 @@ const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
 
 // This is our Server Component for fetching data
 const InsightsPage = async () => {
-  const articles = await sanityClient.fetch<any[]>(postsQuery);
+  const articles = await sanityClient.fetch<SanityPost[]>(postsQuery);
   const featuredPost = articles[0];
 
   return (

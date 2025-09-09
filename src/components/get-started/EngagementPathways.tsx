@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants, easeOut } from "framer-motion"; // 1. Import the 'Variants' type
 import { Rocket, CalendarDays, Mail } from "lucide-react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -17,7 +17,7 @@ const pathways = [
     icon: <Rocket className="h-10 w-10 text-brand-yellow" />,
     title: "Start a New Project",
     description:
-      "Have a clear vision for a new web or mobile application? Let's dive into the scope, timeline, and strategy to bring it to life.",
+      "Have a clear vision for a new web or mobile application? Let&apos;s dive into the scope, timeline, and strategy to bring it to life.", // Fixed apostrophe
     cta: "Describe Your Project",
     actionType: "scroll",
     actionTarget: "project",
@@ -35,7 +35,7 @@ const pathways = [
     icon: <Mail className="h-10 w-10 text-brand-yellow" />,
     title: "General Inquiry",
     description:
-      "Have a different question about partnerships, our services, or anything else? We're here to help and happy to connect.",
+      "Have a different question about partnerships, our services, or anything else? We&apos;re here to help and happy to connect.", // Fixed apostrophe
     cta: "Ask a Question",
     actionType: "link",
     actionTarget: "/contact",
@@ -46,7 +46,8 @@ const EngagementPathways = ({
   onSelectProject,
   onSelectConsultation,
 }: EngagementPathwaysProps) => {
-  const cardVariants = {
+  // 2. Explicitly apply the 'Variants' type to our object
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
       opacity: 1,
@@ -54,7 +55,7 @@ const EngagementPathways = ({
       transition: {
         delay: i * 0.2,
         duration: 0.6,
-        ease: "easeOut",
+        ease: easeOut,
       },
     }),
   };
@@ -87,7 +88,6 @@ const EngagementPathways = ({
             viewport={{ once: true, amount: 0.5 }}
             variants={cardVariants}
           >
-            {/* We make the whole card a button/link for better UX */}
             {pathway.actionType === "link" ? (
               <Link href={pathway.actionTarget as string} className="h-full">
                 <div className="h-full flex flex-col text-left bg-card border rounded-lg p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brand-yellow">

@@ -14,7 +14,6 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Initialize Redis and Ratelimiter for both functions
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
@@ -30,20 +29,27 @@ export async function subscribeUser(email: string) {
   if (!email) {
     return { success: false, message: "Email is required." };
   }
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (!audienceId) {
+    console.error("RESEND_AUDIENCE_ID is not set.");
+    return {
+      success: false,
+      message: "Subscription service is not configured.",
+    };
+  }
 
   try {
-    // 1. Add the user to your Resend audience/contact list
     await resend.contacts.create({
       email: email,
-      audienceId: "03f28832-e3dd-4a33-85c8-05cd42e02800", // Get this from your Resend dashboard
+      audienceId: audienceId,
     });
 
-    // 2. (Optional) Send a welcome email
     await resend.emails.send({
-      from: "Infinite Dynamics <updates@infinite-dynamics.com>", // Use your verified domain
+      from: "Infinite Dynamics Updates <updates@infinite-dynamics.com>",
       to: email,
       subject: "Welcome to Infinite Insights!",
       html: "<h1>Thank you for subscribing!</h1><p>You will now receive the latest insights in technology and design directly to your inbox.</p>",
+      replyTo: "info@infinite-dynamics.com",
     });
 
     return { success: true, message: "Thank you for subscribing!" };
@@ -56,9 +62,7 @@ export async function subscribeUser(email: string) {
   }
 }
 
-// === FUNCTION 2: SEND CONTACT EMAIL (Now with server-side validation) ===
 export async function sendContactEmail(formData: TContactForm) {
-  // 2. Validate the data on the server
   const validation = contactFormSchema.safeParse(formData);
   if (!validation.success) {
     return {
@@ -68,7 +72,6 @@ export async function sendContactEmail(formData: TContactForm) {
   }
   const { fullName, email, phone, message } = validation.data;
 
-  // 3. Rate limiting logic
   const ip = (await headers()).get("x-forwarded-for");
   const { success } = await ratelimit.limit(ip ?? "anonymous");
   if (!success) {
@@ -78,13 +81,12 @@ export async function sendContactEmail(formData: TContactForm) {
     };
   }
 
-  // 4. Send the email
   try {
     await resend.emails.send({
-      from: "Infinite Dynamics <contact@infinite-dynamics.com>", // IMPORTANT: Use a verified domain
-      to: "saheedamansaray@gmail.com", // Your actual receiving email
+      from: "Website Contact Form <noreply@infinite-dynamics.com>",
+      to: "info@infinite-dynamics.com",
       subject: `New Message from ${fullName} via Website`,
-      reply_to: email,
+      replyTo: email,
       html: `
         <p>You received a new message from your website contact form.</p>
         <p><strong>Name:</strong> ${fullName}</p>
@@ -105,7 +107,6 @@ export async function sendContactEmail(formData: TContactForm) {
   }
 }
 
-// === FUNCTION 3: HANDLE JOB APPLICATION ===
 export async function applyForJob(formData: FormData) {
   const data = Object.fromEntries(formData.entries());
   const validation = applicationSchema.safeParse(data);
@@ -124,11 +125,17 @@ export async function applyForJob(formData: FormData) {
 
     // Email to the company
     await resend.emails.send({
-      from: "Infinite Dynamics Careers <careers@yourverifieddomain.com>",
-      to: "saheedamansaray@gmail.com",
+      from: "Careers <careers@infinite-dynamics.com>",
+      to: "info@infinite-dynamics.com",
       subject: `New Application for ${jobTitle}: ${fullName}`,
-      reply_to: email,
-      html: `...`, // Your existing HTML content
+      replyTo: email,
+      html: `
+        <h1>New Application: ${jobTitle}</h1>
+        <p><strong>Applicant:</strong> ${fullName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <h2>Cover Letter:</h2>
+        <p>${coverLetter.replace(/\n/g, "<br>")}</p>
+      `,
       attachments: [
         {
           filename: `resume-${fullName.replace(/ /g, "_")}.pdf`,
@@ -139,7 +146,7 @@ export async function applyForJob(formData: FormData) {
 
     // Confirmation email to the candidate
     await resend.emails.send({
-      from: "Infinite Dynamics <noreply@yourverifieddomain.com>",
+      from: "Infinite Dynamics Careers <noreply@infinite-dynamics.com>",
       to: email,
       subject: `We've Received Your Application for ${jobTitle}`,
       html: `

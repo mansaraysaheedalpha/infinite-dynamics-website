@@ -15,7 +15,7 @@ const teamMembers = [
     role: "Co-Founder & CEO",
     location: "Freetown, Sierra Leone",
     bio: "The visionary architect behind our technology. A self-taught engineer with an insatiable curiosity, Saheed leads our product development with a hands-on approach, turning complex challenges into elegant, high-performance software.",
-    image: "/saheed-mansaray-ceo.png",
+    image: "/saheed-mansaray-ceo.jpg",
   },
   {
     name: "Alpha Saheed Mansaray",

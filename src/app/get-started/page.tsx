@@ -14,7 +14,7 @@ const GetStartedPage = () => {
   const projectFormRef = useRef<HTMLDivElement>(null);
   const consultationRef = useRef<HTMLDivElement>(null);
 
-  const scrollTo = (ref: React.RefObject<HTMLDivElement>) => {
+  const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
     ref.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",

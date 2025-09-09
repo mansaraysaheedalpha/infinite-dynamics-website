@@ -102,7 +102,7 @@ const JobDetailClientView = ({ job }: { job: any }) => {
                 Apply for this role
               </h3>
               <p className="mt-2 text-muted-foreground">
-                Ready to make an impact? We'd love to hear from you.
+                Ready to make an impact? We&apos;d love to hear from you.
               </p>
 
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

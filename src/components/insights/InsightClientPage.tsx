@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useMemo } from "react"; // 1. Import useState for interactivity
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SanityPost } from "@/types"; // 1. Import our SanityPost type
 
 const categories = [
   "All",
@@ -27,19 +28,20 @@ const categories = [
   "Scalability",
 ];
 
-// This component receives the data as props
+// 2. Define the component's props with our specific types instead of 'any'
+interface InsightsClientPageProps {
+  articles: SanityPost[];
+  featuredPost: SanityPost;
+}
+
 const InsightsClientPage = ({
   articles,
   featuredPost,
-}: {
-  articles: any[];
-  featuredPost: any;
-}) => {
+}: InsightsClientPageProps) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("newest"); // 3. State for sorting
+  const [sortBy, setSortBy] = useState("newest");
 
-  /// 4. useMemo optimizes performance by only re-calculating when dependencies change
   const filteredAndSortedArticles = useMemo(() => {
     return articles
       .filter((article) => {
@@ -59,7 +61,7 @@ const InsightsClientPage = ({
 
   return (
     <>
-      {/* Featured Post Hero Section (No changes needed here) */}
+      {/* Featured Post Hero Section */}
       <motion.section
         className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-card border rounded-xl overflow-hidden p-8"
         initial={{ opacity: 0, y: 20 }}
@@ -86,13 +88,18 @@ const InsightsClientPage = ({
               <p className="text-sm text-muted-foreground">
                 {new Date(featuredPost.publishedAt).toLocaleDateString(
                   "en-US",
-                  { year: "numeric", month: "long", day: "numeric" }
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
                 )}
               </p>
             </div>
           </div>
           <Button asChild className="mt-4">
-            <Link href={`/insights/${featuredPost.slug}`}>
+            {/* 3. Correct the link href to use .slug.current */}
+            <Link href={`/insights/${featuredPost.slug.current}`}>
               Read The Article
             </Link>
           </Button>
@@ -136,7 +143,6 @@ const InsightsClientPage = ({
               </Button>
             ))}
           </div>
-          {/* 5. Sort By Dropdown */}
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="w-full md:w-[180px] h-12">
               <SelectValue placeholder="Sort by..." />
@@ -149,7 +155,7 @@ const InsightsClientPage = ({
         </div>
       </motion.section>
 
-      {/* Articles Grid (Now renders filtered articles) */}
+      {/* Articles Grid */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -160,8 +166,8 @@ const InsightsClientPage = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredAndSortedArticles.map((article) => (
               <Link
-                href={`/insights/${article.slug}`}
-                key={article.slug}
+                href={`/insights/${article.slug.current}`} // 3. Correct href
+                key={article._id} // 4. Use the unique article._id for the key
                 className="bg-card border rounded-lg overflow-hidden group transition-all hover:shadow-lg hover:-translate-y-1"
               >
                 <div className="relative h-56 w-full">
@@ -210,8 +216,9 @@ const InsightsClientPage = ({
               No insights found
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Your search for "{searchTerm}" in the "{selectedCategory}"
-              category returned no results.
+              {/* 5. Fix unescaped quotes */}
+              Your search for &quot;{searchTerm}&quot; in the &quot;
+              {selectedCategory}&quot; category returned no results.
             </p>
             <Button
               variant="link"

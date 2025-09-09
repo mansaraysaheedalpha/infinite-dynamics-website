@@ -13,8 +13,9 @@ import {
 import JobCard from "./JobCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { SanityJob } from "@/types";
 
-const JobListings = ({ jobs }: { jobs: any[] }) => {
+const JobListings = ({ jobs }: { jobs: SanityJob[] }) => {
   const [departmentFilter, setDepartmentFilter] = useState("All");
   const [locationFilter, setLocationFilter] = useState("All");
    const [searchTerm, setSearchTerm] = useState("");
@@ -83,7 +84,7 @@ const JobListings = ({ jobs }: { jobs: any[] }) => {
         <AnimatePresence>
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job, index) => (
-              <JobCard key={job.slug} job={job} index={index} />
+              <JobCard key={job._id} job={job} index={index} />
             ))
           ) : (
             <p className="text-center text-muted-foreground py-10">

@@ -28,7 +28,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Building Tomorrow's{" "}
+            Building Tomorrow&apos;s{" "}
             <span className="text-brand-yellow">Digital Landscape</span>
           </motion.h1>
           <motion.p

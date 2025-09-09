@@ -162,7 +162,7 @@ const UiUxDesignPage = () => {
           Have a Design Challenge?
         </h2>
         <p className="mt-2 text-lg text-muted-foreground">
-          Let's collaborate to create a visually stunning and effective
+          Let&apos;s collaborate to create a visually stunning and effective
           solution.
         </p>
         <Button asChild size="lg" className="mt-6">

@@ -4,7 +4,6 @@
 
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
-import Image from "next/image";
 
 const stats = [
   { value: 98, label: "Client Satisfaction", suffix: "%" },

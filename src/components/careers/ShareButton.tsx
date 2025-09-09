@@ -11,11 +11,11 @@ import {
 import { Button } from "@/components/ui/Button";
 import {
   Share2,
-  Linkedin,
-  Twitter,
   Link as LinkIcon,
   Check,
 } from "lucide-react";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 interface ShareButtonProps {
   title: string;
@@ -36,14 +36,14 @@ export const ShareButton = ({ title, slug }: ShareButtonProps) => {
   const shareOptions = [
     {
       name: "LinkedIn",
-      icon: <Linkedin className="h-5 w-5" />,
+      icon: <FaLinkedin className="h-6 w-6" />,
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
         url
       )}&title=${encodeURIComponent(title)}`,
     },
     {
       name: "Twitter",
-      icon: <Twitter className="h-5 w-5" />,
+      icon: <FaXTwitter className="h-6 w-6" />,
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
         url
       )}&text=${encodeURIComponent(title)}`,

@@ -4,6 +4,7 @@ import { sanityClient, urlFor } from "@/lib/sanity";
 import Image from "next/image";
 import PortableTextComponent from "@/components/PortableTextComponent";
 import { Metadata } from "next";
+import { SanityPost } from "@/types";
 
 // GROQ query to get a single post by its slug
 const postQuery = `*[_type == "post" && slug.current == $slug][0] {
@@ -17,7 +18,7 @@ const postQuery = `*[_type == "post" && slug.current == $slug][0] {
 
 // This function tells Next.js which pages to build at build time
 export async function generateStaticParams() {
-  const posts = await sanityClient.fetch<any[]>(
+  const posts = await sanityClient.fetch<SanityPost[]>(
     `*[_type == "post"]{"slug": slug.current}`
   );
   return posts.map((post) => ({
@@ -29,18 +30,28 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+  const { slug } = await params;
+  const post = await sanityClient.fetch<SanityPost>(postQuery, {
+    slug: slug,
+  });
   return {
     title: `${post.title} | Infinite Insights`,
-    description: post.subtitle,
+    description: post.subtitle || "A deep-dive article from Infinite Dynamics.", // Fallback description
   };
 }
 
-const ArticlePage = async ({ params }: { params: { slug: string } }) => {
+const ArticlePage = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   // Fetch the specific post based on the slug from the URL
-  const post = await sanityClient.fetch<any>(postQuery, { slug: params.slug });
+  const { slug } = await params;
+  const post = await sanityClient.fetch<SanityPost>(postQuery, {
+    slug: slug,
+  });
 
   return (
     <div>

@@ -9,7 +9,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TProjectIntake, projectIntakeSchema } from "@/lib/validators";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -18,9 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"; // 1. Import new form components
 import { CheckCircle, Loader2 } from "lucide-react";
-// We will create this server action next
-// import { sendProjectBrief } from "@/app/actions";
 
 const steps = [
   { id: 1, name: "Your Details", fields: ["fullName", "companyName", "email"] },
@@ -38,19 +43,21 @@ const ProjectIntakeForm = () => {
     "idle" | "submitting" | "success" | "error"
   >("idle");
 
-  const {
-    register,
-    handleSubmit,
-    trigger,
-    formState: { errors },
-    control, // For the Select component
-  } = useForm<TProjectIntake>({
+  // 2. The useForm hook is now assigned to a 'form' constant
+  const form = useForm<TProjectIntake>({
     resolver: zodResolver(projectIntakeSchema),
+    defaultValues: {
+      fullName: "",
+      companyName: "",
+      email: "",
+      projectName: "",
+      projectDescription: "",
+    },
   });
 
   const nextStep = async () => {
     const fields = steps[currentStep].fields;
-    const output = await trigger(fields as (keyof TProjectIntake)[], {
+    const output = await form.trigger(fields as (keyof TProjectIntake)[], {
       shouldFocus: true,
     });
     if (!output) return;
@@ -63,11 +70,7 @@ const ProjectIntakeForm = () => {
 
   const onSubmit: SubmitHandler<TProjectIntake> = async (data) => {
     setSubmissionStatus("submitting");
-    console.log(data); // For now, we'll just log the data
-    // const result = await sendProjectBrief(data);
-    // setSubmissionStatus(result.success ? "success" : "error");
-
-    // Simulating API call
+    console.log(data);
     setTimeout(() => setSubmissionStatus("success"), 2000);
   };
 
@@ -88,7 +91,7 @@ const ProjectIntakeForm = () => {
     <div className="max-w-3xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Let's Talk About Your Project
+          Let&apos;s Talk About Your Project
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           This helps us understand your needs so we can have a productive first
@@ -96,7 +99,7 @@ const ProjectIntakeForm = () => {
         </p>
       </div>
 
-      {/* Stepper */}
+      {/* Stepper UI remains the same */}
       <div className="flex justify-between items-center mb-8">
         {steps.map((step, index) => (
           <div key={step.id} className="flex items-center">
@@ -110,7 +113,11 @@ const ProjectIntakeForm = () => {
               {step.id}
             </div>
             <p
-              className={`ml-2 font-semibold ${currentStep >= index ? "text-foreground" : "text-muted-foreground"}`}
+              className={`ml-2 font-semibold ${
+                currentStep >= index
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
               {step.name}
             </p>
@@ -121,171 +128,201 @@ const ProjectIntakeForm = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {currentStep === 0 && (
-              <div className="space-y-6">
-                <div>
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input id="fullName" {...register("fullName")} />
-                  {errors.fullName && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.fullName.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="companyName">Company Name (Optional)</Label>
-                  <Input id="companyName" {...register("companyName")} />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" {...register("email")} />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {currentStep === 1 && (
-              <div className="space-y-6">
-                <div>
-                  <Label htmlFor="projectName">Project Name</Label>
-                  <Input id="projectName" {...register("projectName")} />
-                  {errors.projectName && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.projectName.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label>Service Needed</Label>
-                  {/* Note: This requires a custom component setup for react-hook-form with shadcn/ui Select */}
-                  <Select
-                    onValueChange={(value) =>
-                      control._setValue("service", value)
-                    }
-                    name="service"
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a service..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Web & Mobile Development">
-                        Web & Mobile Development
-                      </SelectItem>
-                      <SelectItem value="UI/UX & Graphics Design">
-                        UI/UX & Graphics Design
-                      </SelectItem>
-                      <SelectItem value="Cloud & DevOps">
-                        Cloud & DevOps
-                      </SelectItem>
-                      <SelectItem value="Corporate Training">
-                        Corporate Training
-                      </SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.service && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.service.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="projectDescription">
-                    Project Description
-                  </Label>
-                  <Textarea
-                    id="projectDescription"
-                    rows={6}
-                    {...register("projectDescription")}
-                  />
-                  {errors.projectDescription && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.projectDescription.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-            {currentStep === 2 && (
-              <div>
-                <Label>Estimated Budget (USD)</Label>
-                <Select
-                  onValueChange={(value) => control._setValue("budget", value)}
-                  name="budget"
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a budget range..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="< $5,000">&lt; $5,000</SelectItem>
-                    <SelectItem value="$5,000 - $10,000">
-                      $5,000 - $10,000
-                    </SelectItem>
-                    <SelectItem value="$10,000 - $25,000">
-                      $10,000 - $25,000
-                    </SelectItem>
-                    <SelectItem value="$25,000 - $50,000">
-                      $25,000 - $50,000
-                    </SelectItem>
-                    <SelectItem value="> $50,000">&gt; $50,000</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.budget && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.budget.message}
-                  </p>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Navigation */}
-        <div className="mt-8 pt-5">
-          <div className="flex justify-between">
-            <Button
-              type="button"
-              onClick={prevStep}
-              variant="outline"
-              disabled={currentStep === 0}
+      {/* 3. The form is now wrapped in the Form provider */}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
             >
-              Previous
-            </Button>
-            {currentStep < steps.length - 1 ? (
-              <Button type="button" onClick={nextStep}>
-                Next Step
-              </Button>
-            ) : (
+              {/* 4. Each input is now wrapped in a FormField for proper state management */}
+              {currentStep === 0 && (
+                <div className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="fullName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="companyName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company Name (Optional)</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email Address</FormLabel>
+                        <FormControl>
+                          <Input type="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+
+              {currentStep === 1 && (
+                <div className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="projectName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Project Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="service"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Service Needed</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a service..." />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Web & Mobile Development">
+                              Web & Mobile Development
+                            </SelectItem>
+                            <SelectItem value="UI/UX & Graphics Design">
+                              UI/UX & Graphics Design
+                            </SelectItem>
+                            <SelectItem value="Cloud & DevOps">
+                              Cloud & DevOps
+                            </SelectItem>
+                            <SelectItem value="Corporate Training">
+                              Corporate Training
+                            </SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="projectDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Project Description</FormLabel>
+                        <FormControl>
+                          <Textarea rows={6} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+              {currentStep === 2 && (
+                <FormField
+                  control={form.control}
+                  name="budget"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Estimated Budget (USD)</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a budget range..." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="< $5,000">&lt; $5,000</SelectItem>
+                          <SelectItem value="$5,000 - $10,000">
+                            $5,000 - $10,000
+                          </SelectItem>
+                          <SelectItem value="$10,000 - $25,000">
+                            $10,000 - $25,000
+                          </SelectItem>
+                          <SelectItem value="$25,000 - $50,000">
+                            $25,000 - $50,000
+                          </SelectItem>
+                          <SelectItem value="> $50,000">
+                            &gt; $50,000
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation */}
+          <div className="mt-8 pt-5">
+            <div className="flex justify-between">
               <Button
-                type="submit"
-                disabled={submissionStatus === "submitting"}
+                type="button"
+                onClick={prevStep}
+                variant="outline"
+                disabled={currentStep === 0}
               >
-                {submissionStatus === "submitting" ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit Project Brief"
-                )}
+                Previous
               </Button>
-            )}
+              {currentStep < steps.length - 1 ? (
+                <Button type="button" onClick={nextStep}>
+                  Next Step
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  disabled={submissionStatus === "submitting"}
+                >
+                  {submissionStatus === "submitting" ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Project Brief"
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </Form>
     </div>
   );
 };

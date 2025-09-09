@@ -6,31 +6,34 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { subscribeUser } from "@/app/actions";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 import { useState } from "react";
+import { Loader2 } from "lucide-react"; // Import a loader icon
 
 const SubscriptionCTA = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false); // 1. Add loading state
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubmitting(true); // 2. Set loading to true
+    setIsSubmitting(true);
 
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email") as string;
 
     try {
       const result = await subscribeUser(email);
-       if (result.success) {
-         toast.success(result.message);
-         (event.target as HTMLFormElement).reset();
-       } else {
-         toast.error(result.message);
-       }
+      if (result.success) {
+        toast.success(result.message);
+        (event.target as HTMLFormElement).reset();
+      } else {
+        toast.error(result.message);
+      }
     } catch (error) {
-      toast.error("An unexpected error occurred.",error);
+      // ✅ This is the corrected block
+      console.error("Subscription failed:", error); // Log the technical error for us
+      toast.error("An unexpected error occurred. Please try again."); // Show a simple message to the user
     } finally {
-      setIsSubmitting(false); // 4. Set loading back to false
+      setIsSubmitting(false);
     }
   };
 
@@ -63,15 +66,22 @@ const SubscriptionCTA = () => {
               placeholder="your.email@example.com"
               className="h-12"
               required
-              disabled={isSubmitting} // 5. Disable input while submitting
+              disabled={isSubmitting}
             />
             <Button
               type="submit"
               size="lg"
               className="h-12"
-              disabled={isSubmitting} // 6. Disable button while submitting
+              disabled={isSubmitting}
             >
-              {isSubmitting ? "Subscribing..." : "Subscribe"}
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Subscribing...
+                </>
+              ) : (
+                "Subscribe"
+              )}
             </Button>
           </form>
         </div>

@@ -1,6 +1,6 @@
 // src/components/layout/Footer.tsx
 
-"use client"; // Add this directive to use hooks
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -8,12 +8,11 @@ import { Button } from "../ui/Button";
 import { services } from "@/lib/data";
 import { FaLinkedin, FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { useState, useEffect } from "react"; // 1. Import hooks
+import { useState, useEffect } from "react";
 
 const Footer = () => {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
 
-  // 2. This effect runs only on the client, after the first render
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
   }, []);
@@ -34,8 +33,9 @@ const Footer = () => {
               Ready to Build the Future?
             </h2>
             <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-              Let's transform your ideas into reality. Partner with Infinite
-              Dynamics to unlock your potential and create something
+              {/* ✅ Corrected apostrophe here */}
+              Let&apos;s transform your ideas into reality. Partner with
+              Infinite Dynamics to unlock your potential and create something
               extraordinary.
             </p>
             <Button
@@ -46,8 +46,8 @@ const Footer = () => {
               <Link href="/contact">Get in Touch</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-10">
-            <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 gap-12 text-center md:text-left md:grid-cols-2 lg:grid-cols-10">
+            <div className="lg:col-span-3 flex flex-col items-center md:items-start">
               <Link href="/" className="inline-block mb-4">
                 <Image
                   src="/logo_5.png"
@@ -57,7 +57,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-gray-400 text-sm">
-                Building tomorrow's digital landscape, today. We are a
+                Building tomorrow&apos;s digital landscape, today. We are a
                 collective of innovators dedicated to crafting elegant,
                 high-performance software solutions.
               </p>
@@ -96,41 +96,43 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 flex flex-col items-center md:items-start">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-yellow">
                 Connect With Us
               </h3>
               <div className="mt-4 space-y-3 text-base text-gray-300">
                 <p>Freetown, Sierra Leone</p>
-                <p>info@infinitedynamics.sl</p>
-                <p>+232 77 123 456</p>
+                <p>info@infinite-dynamics.com</p>
+                <p>+232 75 254 262</p>
               </div>
               <div className="flex mt-6 space-x-6">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-brand-yellow transition-transform hover:scale-110"
                 >
+                  <span className="sr-only">X/Twitter</span>
                   <FaXTwitter className="h-6 w-6" />
                 </a>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-brand-yellow transition-transform hover:scale-110"
                 >
+                  <span className="sr-only">LinkedIn</span>
                   <FaLinkedin className="h-6 w-6" />
                 </a>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-brand-yellow transition-transform hover:scale-110"
                 >
+                  <span className="sr-only">Facebook</span>
                   <FaFacebook className="h-6 w-6" />
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-brand-secondary/30 py-6">
+        <div className="bg-brand-secondary/30 py-6 mt-16">
           <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            {/* 3. Render the year only when it's available */}
             <p>
               &copy; {currentYear || new Date().getFullYear()} Infinite
               Dynamics. All rights reserved.
