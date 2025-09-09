@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { TApplicationForm, applicationSchema } from "@/lib/validators";
 import { applyForJob } from "@/app/actions";
+import { Loader2 } from "lucide-react";
 
 export const ApplicationForm = ({
   jobTitle,
@@ -51,6 +52,8 @@ export const ApplicationForm = ({
         toast.error("Submission Failed", { description: result.message });
       }
     } catch (error) {
+      // ✅ 1. Log the actual error to the console for debugging
+      console.error("Application submission failed:", error);
       toast.error("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false);
@@ -58,7 +61,7 @@ export const ApplicationForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
       <div>
         <Label htmlFor="fullName">Full Name</Label>
         <Input
@@ -103,7 +106,10 @@ export const ApplicationForm = ({
         )}
       </div>
       <div>
-        <Label htmlFor="resume">{"CV / Resume (PDF, DOC, DOCX, <5MB)"}</Label>
+        {/* ✅ 2. Fixed unescaped '<' character */}
+        <Label htmlFor="resume">
+          {"CV / Resume (PDF, DOC, DOCX, &lt;5MB)"}
+        </Label>
         <Input
           id="resume"
           type="file"
@@ -119,7 +125,14 @@ export const ApplicationForm = ({
         )}
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Submit Application"}
+        {isSubmitting ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Submitting...
+          </>
+        ) : (
+          "Submit Application"
+        )}
       </Button>
     </form>
   );

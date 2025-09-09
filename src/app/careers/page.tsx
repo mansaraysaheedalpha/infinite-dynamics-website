@@ -7,6 +7,7 @@ import { FaLightbulb, FaMountain, FaBolt } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Metadata } from "next";
+import { SanityJob } from "@/types"; // 1. Import our SanityJob type
 
 // SEO & Metadata
 export const metadata: Metadata = {
@@ -17,12 +18,20 @@ export const metadata: Metadata = {
     title: "Careers | Infinite Dynamics",
     description: "Join our mission to build the future of technology.",
     images: [
-      { url: "/careers-hero.png" }, // Add a social sharing image to /public
+      { url: "/careers-hero.png" }, // Make sure this image exists in /public
     ],
   },
 };
 
-const jobsQuery = `*[_type == "job"] | order(_createdAt desc) { title, "slug": slug.current, department, location, type }`;
+// Use a more specific query to only get the fields we need for the listing
+const jobsQuery = `*[_type == "job"] | order(_createdAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  department,
+  location,
+  type
+}`;
 
 const values = [
   {
@@ -40,7 +49,7 @@ const values = [
 ];
 
 const CareersPage = async () => {
-  const jobs = await sanityClient.fetch<any[]>(jobsQuery);
+  const jobs = await sanityClient.fetch<SanityJob[]>(jobsQuery);
 
   return (
     <div>
@@ -52,7 +61,7 @@ const CareersPage = async () => {
           loop
           muted
           playsInline
-          aria-hidden="true" // Accessibility improvement
+          aria-hidden="true"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10" />
         <div className="relative z-20 container mx-auto flex h-full flex-col items-center justify-center text-center text-white">
@@ -60,8 +69,9 @@ const CareersPage = async () => {
             Build the Future With Us
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-gray-300 drop-shadow-sm">
-            We're looking for passionate minds to join our mission and shape the
-            future of technology, from Freetown to the world.
+            {/* 3. Fixed unescaped apostrophes */}
+            We&apos;re looking for passionate minds to join our mission and
+            shape the future of technology, from Freetown to the world.
           </p>
         </div>
       </section>
@@ -73,8 +83,8 @@ const CareersPage = async () => {
             Why Join Infinite Dynamics?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-            We're not just building products; we're building a culture of
-            innovation, growth, and global impact. Here, your work matters.
+            We&apos;re not just building products; we&apos;re building a culture
+            of innovation, growth, and global impact. Here, your work matters.
           </p>
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
@@ -91,7 +101,7 @@ const CareersPage = async () => {
           </div>
         </section>
 
-        <section className="mt-24">
+        <section id="open-positions" className="mt-24 scroll-mt-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground">
               Open Positions
@@ -103,17 +113,15 @@ const CareersPage = async () => {
           <JobListings jobs={jobs} />
         </section>
 
-        {/* === Life at Infinite Dynamics Section === */}
         <CultureSection />
 
-        {/* === Final CTA === */}
         <section className="mt-24 bg-card border rounded-lg p-12 text-center">
           <h2 className="text-3xl font-bold text-foreground">
-            Don't See a Role For You?
+            Don&apos;t See a Role For You?
           </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            We're always looking for exceptional talent. Introduce yourself and
-            let's see what we can build together.
+            We&apos;re always looking for exceptional talent. Introduce yourself
+            and let&apos;s see what we can build together.
           </p>
           <Button asChild size="lg" className="mt-6">
             <Link href="/contact">Get in Touch</Link>

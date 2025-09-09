@@ -31,7 +31,7 @@ const values = [
     icon: <FaLightbulb className="h-8 w-8 text-brand-yellow" />,
     title: "Insatiable Curiosity",
     description:
-      "We are driven by the question 'what if?' We constantly explore new technologies and challenge assumptions to find better solutions.",
+      "We are driven by the question &lsquo;what if?&rsquo; We constantly explore new technologies and challenge assumptions to find better solutions.", // ✅ Fixed single quotes
   },
   {
     icon: <FaMountain className="h-8 w-8 text-brand-yellow" />,
@@ -69,7 +69,7 @@ const AboutPage = () => {
             experience and ambition across the globe. Founded by a father-son
             duo, we are a testament to the power of global collaboration, fusing
             strategic wisdom with vibrant, self-taught ingenuity to build
-            tomorrow's digital landscape.
+            tomorrow&apos;s digital landscape. {/* ✅ Fixed apostrophe */}
           </p>
         </div>
         <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">

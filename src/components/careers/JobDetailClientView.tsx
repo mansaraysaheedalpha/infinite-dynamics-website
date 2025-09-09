@@ -16,8 +16,9 @@ import {
 import { useState } from "react";
 import { ApplicationForm } from "./ApplicationForm";
 import { ShareButton } from "./ShareButton";
+import { SanityJob } from "@/types";
 
-const JobDetailClientView = ({ job }: { job: any }) => {
+const JobDetailClientView = ({ job }: { job: SanityJob }) => {
    const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
     <div className="bg-background text-foreground">

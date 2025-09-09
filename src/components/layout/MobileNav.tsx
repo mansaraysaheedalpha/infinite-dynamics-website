@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
 import { Menu } from "lucide-react";
 import {
   Sheet,

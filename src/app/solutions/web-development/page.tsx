@@ -171,7 +171,7 @@ const WebDevelopmentPage = () => {
         <p className="mt-2 text-lg text-gray-300">
           {" "}
           {/* Corrected text color */}
-          Let's discuss how we can bring your vision to life.
+          Let&apos;s discuss how we can bring your vision to life.
         </p>
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Contact Us Today</Link>

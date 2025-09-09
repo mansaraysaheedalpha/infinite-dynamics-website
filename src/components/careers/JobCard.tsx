@@ -4,11 +4,12 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { SanityJob } from "@/types";
 
-const JobCard = ({ job, index }: { job: any; index: number }) => {
+const JobCard = ({ job, index }: { job: SanityJob; index: number }) => {
   return (
     <motion.div
-      key={job.slug}
+      key={job.slug.current}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
