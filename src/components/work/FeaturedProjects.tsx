@@ -6,18 +6,7 @@ import { motion, Variants } from "framer-motion"; // 1. Import the 'Variants' ty
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-
-type CaseStudy = {
-  id: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-  technologies: string[];
-  challenge: string;
-  solution: string;
-  liveUrl: string;
-  repoUrl: string;
-};
+import { CaseStudy } from "@/types";
 
 interface FeaturedProjectsProps {
   caseStudies: CaseStudy[];
