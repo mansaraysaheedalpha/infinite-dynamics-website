@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SanityPost } from "@/types"; // 1. Import our SanityPost type
+import { SanityPost } from "@/types";
 
 const categories = [
   "All",
@@ -28,7 +28,6 @@ const categories = [
   "Scalability",
 ];
 
-// 2. Define the component's props with our specific types instead of 'any'
 interface InsightsClientPageProps {
   articles: SanityPost[];
   featuredPost: SanityPost;
@@ -98,7 +97,6 @@ const InsightsClientPage = ({
             </div>
           </div>
           <Button asChild className="mt-4">
-            {/* 3. Correct the link href to use .slug.current */}
             <Link href={`/insights/${featuredPost.slug.current}`}>
               Read The Article
             </Link>
@@ -113,6 +111,7 @@ const InsightsClientPage = ({
           />
         </div>
       </motion.section>
+
       {/* Search and Filter Section */}
       <motion.section
         className="my-16"
@@ -153,6 +152,7 @@ const InsightsClientPage = ({
           </Select>
         </div>
       </motion.section>
+
       {/* Articles Grid */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -163,13 +163,12 @@ const InsightsClientPage = ({
         {filteredAndSortedArticles.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredAndSortedArticles.map((article) => (
+              // ✅ FIX: The 'key' prop is now correctly placed here
               <Link
-                // 3. Correct href
-                href={`/insights/${article.slug.current}`}
-                // 4. Use the unique article._id for the key
                 key={article._id}
+                href={`/insights/${article.slug.current}`}
                 className="bg-card border rounded-lg overflow-hidden group transition-all hover:shadow-lg hover:-translate-y-1"
-                legacyBehavior>
+              >
                 <div className="relative h-56 w-full">
                   <Image
                     src={urlFor(article.mainImage).width(600).url()}
@@ -216,7 +215,6 @@ const InsightsClientPage = ({
               No insights found
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              {/* 5. Fix unescaped quotes */}
               Your search for &quot;{searchTerm}&quot; in the &quot;
               {selectedCategory}&quot; category returned no results.
             </p>

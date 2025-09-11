@@ -48,7 +48,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           >
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link href="/solutions">Explore Our Work</Link>
+              <Link href="/work">Explore Our Work</Link>
             </Button>
             <Button
               asChild
