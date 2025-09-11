@@ -18,7 +18,7 @@ const JobCard = ({ job, index }: { job: SanityJob; index: number }) => {
       <Link
         href={`/careers/${job.slug}`}
         className="block bg-card border rounded-lg p-6 transition-all group hover:border-brand-yellow hover:shadow-lg"
-      >
+        legacyBehavior>
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
           <div className="flex-grow">
             <h3 className="text-xl font-bold text-foreground group-hover:text-brand-yellow transition-colors">

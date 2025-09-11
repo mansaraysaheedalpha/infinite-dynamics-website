@@ -113,7 +113,6 @@ const InsightsClientPage = ({
           />
         </div>
       </motion.section>
-
       {/* Search and Filter Section */}
       <motion.section
         className="my-16"
@@ -154,7 +153,6 @@ const InsightsClientPage = ({
           </Select>
         </div>
       </motion.section>
-
       {/* Articles Grid */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -166,10 +164,12 @@ const InsightsClientPage = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredAndSortedArticles.map((article) => (
               <Link
-                href={`/insights/${article.slug.current}`} // 3. Correct href
-                key={article._id} // 4. Use the unique article._id for the key
+                // 3. Correct href
+                href={`/insights/${article.slug.current}`}
+                // 4. Use the unique article._id for the key
+                key={article._id}
                 className="bg-card border rounded-lg overflow-hidden group transition-all hover:shadow-lg hover:-translate-y-1"
-              >
+                legacyBehavior>
                 <div className="relative h-56 w-full">
                   <Image
                     src={urlFor(article.mainImage).width(600).url()}

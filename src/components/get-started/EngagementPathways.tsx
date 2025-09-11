@@ -76,7 +76,6 @@ const EngagementPathways = ({
         Select the path that best fits your needs. Each journey is tailored to
         ensure a successful outcome.
       </p>
-
       <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pathways.map((pathway, i) => (
           <motion.div
@@ -89,7 +88,7 @@ const EngagementPathways = ({
             variants={cardVariants}
           >
             {pathway.actionType === "link" ? (
-              <Link href={pathway.actionTarget as string} className="h-full">
+              <Link href={pathway.actionTarget as string} className="h-full" legacyBehavior>
                 <div className="h-full flex flex-col text-left bg-card border rounded-lg p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brand-yellow">
                   {pathway.icon}
                   <h3 className="mt-6 text-2xl font-bold text-foreground">

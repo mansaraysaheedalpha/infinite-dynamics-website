@@ -48,7 +48,7 @@ const Footer = () => {
           </div>
           <div className="grid grid-cols-1 gap-12 text-center md:text-left md:grid-cols-2 lg:grid-cols-10">
             <div className="lg:col-span-3 flex flex-col items-center md:items-start">
-              <Link href="/" className="inline-block mb-4">
+              <Link href="/" className="inline-block mb-4" legacyBehavior>
                 <Image
                   src="/logo_5.png"
                   alt="Infinite Dynamics Logo"
@@ -72,7 +72,7 @@ const Footer = () => {
                     <Link
                       href={`/solutions/${service.slug}`}
                       className="text-base text-gray-300 transition-colors hover:text-brand-yellow hover:underline"
-                    >
+                      legacyBehavior>
                       {service.title.split("&")[0]}
                     </Link>
                   </li>
@@ -89,7 +89,7 @@ const Footer = () => {
                     <Link
                       href={link.href}
                       className="text-base text-gray-300 transition-colors hover:text-brand-yellow hover:underline"
-                    >
+                      legacyBehavior>
                       {link.label}
                     </Link>
                   </li>
