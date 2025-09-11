@@ -38,3 +38,18 @@ export interface SanityJob {
   type?: string;
   description: PortableTextBlock[];
 }
+
+export interface CaseStudy {
+  id: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+  technologies: string[];
+  services: string[];
+  overview: string;
+  architectureDetails?: string; // Optional field
+  designDetails?: string; // Optional field
+  gallery?: string[]; // Optional field
+  liveUrl?: string;
+  repoUrl?: string;
+}

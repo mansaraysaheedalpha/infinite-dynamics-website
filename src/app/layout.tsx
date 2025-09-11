@@ -1,16 +1,18 @@
 // src/app/layout.tsx
 
-"use client";
-
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ParallaxProvider } from "react-scroll-parallax";
-import PageTransitionProvider from "@/components/layout/PageTransitionProvider";
-import { Toaster } from "sonner";
+import ClientOnly from "@/components/layout/ClientOnly"; // Import ClientOnly
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Infinite Dynamics",
+  description: "Building Tomorrow's Digital Landscape",
+};
 
 export default function RootLayout({
   children,
@@ -20,15 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ParallaxProvider>
+        <ClientOnly>
           <Header />
-          <main>
-            <PageTransitionProvider>{children}</PageTransitionProvider>{" "}
-            {/* <-- This closing tag is now correct */}
-          </main>
-          <Footer />
-        </ParallaxProvider>
-        <Toaster richColors />
+        </ClientOnly>
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
