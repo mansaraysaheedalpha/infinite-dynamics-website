@@ -31,7 +31,7 @@ const values = [
     icon: <FaLightbulb className="h-8 w-8 text-brand-yellow" />,
     title: "Insatiable Curiosity",
     description:
-      "We are driven by the question &lsquo;what if?&rsquo; We constantly explore new technologies and challenge assumptions to find better solutions.", // ✅ Fixed single quotes
+      "We are driven by the question what if? We constantly explore new technologies and challenge assumptions to find better solutions.", // ✅ Fixed single quotes
   },
   {
     icon: <FaMountain className="h-8 w-8 text-brand-yellow" />,
