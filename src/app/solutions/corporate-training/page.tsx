@@ -4,7 +4,7 @@
 
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
 import {
   FaChalkboardTeacher,
@@ -60,7 +60,8 @@ const CorporateTrainingPage = () => {
       subtitle="Empowering your team with the digital skills of tomorrow."
     >
       {/* === Section 1: The Core Philosophy === */}
-      <motion.section
+      <Motion
+        type="section"
         className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -71,8 +72,8 @@ const CorporateTrainingPage = () => {
             Investing in Your People
           </h2>
           <p className="text-lg text-muted-foreground">
-            In a rapidly evolving digital world, your team&apos;s skill set is your
-            greatest asset. Our corporate training programs are designed to
+            In a rapidly evolving digital world, your team&apos;s skill set is
+            your greatest asset. Our corporate training programs are designed to
             upskill and empower your workforce, transforming them into a more
             efficient, innovative, and competitive team. We bridge the gap
             between existing knowledge and future needs.
@@ -88,10 +89,11 @@ const CorporateTrainingPage = () => {
             playsInline
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 2: Our Training Methodology === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -120,10 +122,11 @@ const CorporateTrainingPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 3: Core Training Areas === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -148,12 +151,13 @@ const CorporateTrainingPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       <ProjectShowcase />
 
       {/* === Section 4: Project Inquiry CTA === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24 bg-card border rounded-lg p-12 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -169,7 +173,7 @@ const CorporateTrainingPage = () => {
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Request a Consultation</Link>
         </Button>
-      </motion.section>
+      </Motion>
     </PageLayout>
   );
 };

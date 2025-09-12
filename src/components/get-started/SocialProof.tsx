@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import CountUp from "react-countup";
 
 const stats = [
@@ -22,7 +22,8 @@ const clientLogos = [
 
 const SocialProof = () => {
   return (
-    <motion.section
+    <Motion
+      type="section"
       className="py-24 bg-brand-secondary"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -76,7 +77,7 @@ const SocialProof = () => {
           </div>
         </div>
       </div>
-    </motion.section>
+    </Motion>
   );
 };
 

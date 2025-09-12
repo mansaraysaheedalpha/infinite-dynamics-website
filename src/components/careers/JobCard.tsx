@@ -2,13 +2,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import { ArrowRight } from "lucide-react";
 import { SanityJob } from "@/types";
 
 const JobCard = ({ job, index }: { job: SanityJob; index: number }) => {
   return (
-    <motion.div
+    <Motion
       key={job.slug.current}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -18,7 +18,7 @@ const JobCard = ({ job, index }: { job: SanityJob; index: number }) => {
       <Link
         href={`/careers/${job.slug}`}
         className="block bg-card border rounded-lg p-6 transition-all group hover:border-brand-yellow hover:shadow-lg"
-        legacyBehavior>
+      >
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
           <div className="flex-grow">
             <h3 className="text-xl font-bold text-foreground group-hover:text-brand-yellow transition-colors">
@@ -34,7 +34,7 @@ const JobCard = ({ job, index }: { job: SanityJob; index: number }) => {
           </div>
         </div>
       </Link>
-    </motion.div>
+    </Motion>
   );
 };
 

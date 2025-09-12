@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 import { Button } from "../ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 
 const HeroSection = () => {
   return (
@@ -22,7 +22,8 @@ const HeroSection = () => {
         <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 md:p-12 border border-white/20 shadow-lg">
           {" "}
           {/* Reduced padding on mobile */}
-          <motion.h1
+          <Motion
+            type="h1"
             className="text-3xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-md" // Adjusted mobile font size
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -30,8 +31,9 @@ const HeroSection = () => {
           >
             Building Tomorrow&apos;s{" "}
             <span className="text-brand-yellow">Digital Landscape</span>
-          </motion.h1>
-          <motion.p
+          </Motion>
+          <Motion
+            type="p"
             className="mt-4 max-w-2xl text-base md:text-xl text-gray-200 drop-shadow-sm" // Adjusted mobile font size
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,8 +42,8 @@ const HeroSection = () => {
             We architect and engineer elegant, high-performance software
             solutions that drive innovation and empower businesses to thrive in
             a digital-first world.
-          </motion.p>
-          <motion.div
+          </Motion>
+          <Motion
             className="mt-8 flex flex-col sm:flex-row justify-center gap-4" // Stack buttons on very small screens
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,7 +60,7 @@ const HeroSection = () => {
             >
               <Link href="/contact">Get a Quote</Link>
             </Button>
-          </motion.div>
+          </Motion>
         </div>
       </div>
     </section>

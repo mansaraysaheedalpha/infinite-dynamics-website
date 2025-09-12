@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 
 const placeholderProjects = [
   {
@@ -30,7 +30,8 @@ const placeholderProjects = [
 
 const ProjectShowcase = () => {
   return (
-    <motion.section
+    <Motion
+      type="section"
       className="mt-24"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +81,7 @@ const ProjectShowcase = () => {
           </div>
         ))}
       </div>
-    </motion.section>
+    </Motion>
   );
 };
 

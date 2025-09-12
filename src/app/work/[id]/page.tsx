@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { ExternalLink, Layers, Palette, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 
 export function generateStaticParams() {
   return caseStudies.map((study) => ({ id: study.id }));
@@ -164,7 +164,7 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
             </div>
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
               {study.gallery.map((image, index) => (
-                <motion.div
+                <Motion
                   key={image}
                   className="relative h-80 w-full rounded-lg overflow-hidden border shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
@@ -178,7 +178,7 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
                     fill
                     className="object-cover"
                   />
-                </motion.div>
+                </Motion>
               ))}
             </div>
           </div>

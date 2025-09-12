@@ -3,7 +3,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import Link from "next/link";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
@@ -61,7 +61,8 @@ const InsightsClientPage = ({
   return (
     <>
       {/* Featured Post Hero Section */}
-      <motion.section
+      <Motion
+        type="section"
         className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-card border rounded-xl overflow-hidden p-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -110,10 +111,11 @@ const InsightsClientPage = ({
             className="object-cover"
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* Search and Filter Section */}
-      <motion.section
+      <Motion
+        type="section"
         className="my-16"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -151,10 +153,11 @@ const InsightsClientPage = ({
             </SelectContent>
           </Select>
         </div>
-      </motion.section>
+      </Motion>
 
       {/* Articles Grid */}
-      <motion.section
+      <Motion
+        type="section"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
@@ -229,9 +232,10 @@ const InsightsClientPage = ({
             </Button>
           </div>
         )}
-      </motion.section>
+      </Motion>
     </>
   );
 };
 
 export default InsightsClientPage;
+ 

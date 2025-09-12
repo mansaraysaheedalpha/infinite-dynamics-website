@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import {
   Users,
   CalendarDays,
@@ -131,7 +131,8 @@ const GlobalConnectShowcase = () => {
           {services.map((service, index) => (
             <Dialog key={service.name}>
               <DialogTrigger asChild>
-                <motion.button
+                <Motion
+                  type="button"
                   className="bg-brand-primary border border-brand-secondary rounded-lg p-6 text-left group transition-all duration-300 hover:border-brand-yellow hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-brand-yellow h-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -150,7 +151,7 @@ const GlobalConnectShowcase = () => {
                   <p className="mt-4 text-xs font-mono tracking-wider text-cyan-400">
                     {service.tech}
                   </p>
-                </motion.button>
+                </Motion>
               </DialogTrigger>
               <DialogContent className="bg-card text-foreground">
                 <DialogHeader>
@@ -180,7 +181,7 @@ const GlobalConnectShowcase = () => {
         <h3 className="text-2xl font-semibold text-white">Features in Focus</h3>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <motion.div
+            <Motion
               key={feature.title}
               className="bg-brand-primary border border-brand-secondary rounded-lg p-6"
               initial={{ opacity: 0, y: 20 }}
@@ -198,7 +199,7 @@ const GlobalConnectShowcase = () => {
                 {feature.description}
               </p>
               {feature.visual}
-            </motion.div>
+            </Motion>
           ))}
         </div>
       </div>

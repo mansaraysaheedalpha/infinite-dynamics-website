@@ -4,7 +4,7 @@
 
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
 // Update icons to be relevant to design
 import {
@@ -60,7 +60,8 @@ const UiUxDesignPage = () => {
       subtitle="Designing intuitive interfaces that captivate and convert."
     >
       {/* === Section 1: The Core Philosophy === */}
-      <motion.section
+      <Motion
+        type="section"
         className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,10 +89,11 @@ const UiUxDesignPage = () => {
             playsInline
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 2: Our Design Process === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -120,10 +122,11 @@ const UiUxDesignPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 3: Tools We Use === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -148,10 +151,11 @@ const UiUxDesignPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 4: Project Inquiry CTA === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24 bg-card border rounded-lg p-12 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +172,7 @@ const UiUxDesignPage = () => {
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Start a Project</Link>
         </Button>
-      </motion.section>
+      </Motion>
     </PageLayout>
   );
 };

@@ -1,7 +1,7 @@
 // src/components/careers/JobDetailClientView.tsx
 
 "use client";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import PortableTextComponent from "../PortableTextComponent";
 import { Button } from "@/components/ui/Button";
 import { MapPin, Building, Clock } from "lucide-react"; // Added missing icon imports
@@ -19,11 +19,12 @@ import { ShareButton } from "./ShareButton";
 import { SanityJob } from "@/types";
 
 const JobDetailClientView = ({ job }: { job: SanityJob }) => {
-   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
     <div className="bg-background text-foreground">
       {/* === Immersive Animated Header === */}
-      <motion.section
+      <Motion
+        type="section"
         className="relative py-24 md:py-32 text-center text-white overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -38,13 +39,13 @@ const JobDetailClientView = ({ job }: { job: SanityJob }) => {
             {job.title}
           </h1>
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Main Content Layout === */}
       <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* --- Left Column: Job Description --- */}
-          <motion.div
+          <Motion
             className="lg:col-span-2"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -89,10 +90,11 @@ const JobDetailClientView = ({ job }: { job: SanityJob }) => {
             >
               <PortableTextComponent value={job.description} />
             </article>
-          </motion.div>
+          </Motion>
 
           {/* --- Right Column: Sticky Apply Card --- */}
-          <motion.aside
+          <Motion
+            type="aside"
             className="lg:col-span-1"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -131,7 +133,7 @@ const JobDetailClientView = ({ job }: { job: SanityJob }) => {
             <div className="border-t pt-6">
               <ShareButton title={job.title} slug={job.slug.current} />
             </div>
-          </motion.aside>
+          </Motion>
         </div>
       </main>
     </div>
