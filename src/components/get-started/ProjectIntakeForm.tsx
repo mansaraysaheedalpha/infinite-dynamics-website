@@ -5,7 +5,8 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import { TProjectIntake, projectIntakeSchema } from "@/lib/validators";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
@@ -132,7 +133,7 @@ const ProjectIntakeForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <AnimatePresence mode="wait">
-            <motion.div
+            <Motion
               key={currentStep}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -286,7 +287,7 @@ const ProjectIntakeForm = () => {
                   )}
                 />
               )}
-            </motion.div>
+            </Motion>
           </AnimatePresence>
 
           {/* Navigation */}

@@ -3,7 +3,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 import EngagementPathways from "@/components/get-started/EngagementPathways";
 import ProjectIntakeForm from "@/components/get-started/ProjectIntakeForm";
 import ConsultationSection from "@/components/get-started/ConsultationSection";
@@ -24,7 +24,8 @@ const GetStartedPage = () => {
   return (
     <>
       {/* === Section 1: Hero === */}
-      <motion.section
+      <Motion
+        type="section"
         className="relative flex items-center justify-center h-[60vh] text-center text-white overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -49,7 +50,7 @@ const GetStartedPage = () => {
             {/* ✅ Fixed apostrophe */}
           </p>
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 2: Engagement Pathways === */}
       <section className="py-24 bg-background">

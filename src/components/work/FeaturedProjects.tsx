@@ -2,11 +2,12 @@
 
 "use client";
 
-import { motion, Variants } from "framer-motion"; // 1. Import the 'Variants' type
+import { Variants } from "framer-motion"; // 1. Import the 'Variants' type
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { CaseStudy } from "@/types";
+import { Motion } from "../layout/Motion";
 
 interface FeaturedProjectsProps {
   caseStudies: CaseStudy[];
@@ -30,7 +31,7 @@ const FeaturedProjects = ({ caseStudies }: FeaturedProjectsProps) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
       {caseStudies.map((study, i) => (
-        <motion.div
+        <Motion
           key={study.id}
           custom={i}
           initial="hidden"
@@ -74,7 +75,7 @@ const FeaturedProjects = ({ caseStudies }: FeaturedProjectsProps) => {
               </div>
             </div>
           </Link>
-        </motion.div>
+        </Motion>
       ))}
     </div>
   );

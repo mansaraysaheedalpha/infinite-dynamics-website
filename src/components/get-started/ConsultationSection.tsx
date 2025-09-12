@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import { InlineWidget } from "react-calendly";
 import { Lightbulb, Code, Target } from "lucide-react";
 
@@ -35,7 +35,7 @@ const ConsultationSection = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Column: Value Proposition */}
-        <motion.div
+        <Motion
           className="space-y-6"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -59,10 +59,10 @@ const ConsultationSection = () => {
             This is your opportunity to leverage our expertise and gain clarity
             on your project&apos;s direction.
           </p>
-        </motion.div>
+        </Motion>
 
         {/* Right Column: Calendly Embed */}
-        <motion.div
+        <Motion
           className="rounded-lg border bg-card overflow-hidden min-h-[650px]"
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -73,7 +73,7 @@ const ConsultationSection = () => {
             url="https://calendly.com/infinite-dynamics-info/30min" // <-- IMPORTANT: REPLACE WITH YOUR CALENDLY LINK
             styles={{ height: "650px" }}
           />
-        </motion.div>
+        </Motion>
       </div>
     </div>
   );

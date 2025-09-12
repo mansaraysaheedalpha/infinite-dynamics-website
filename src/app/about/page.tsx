@@ -4,7 +4,7 @@
 
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
 import Image from "next/image";
 import { FaLightbulb, FaMountain, FaBolt } from "react-icons/fa";
@@ -54,7 +54,8 @@ const AboutPage = () => {
       subtitle="The minds, mission, and motivation behind the code."
     >
       {/* === Section 1: The Mission & Origin === */}
-      <motion.section
+      <Motion
+        type="section"
         className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,10 +83,11 @@ const AboutPage = () => {
             playsInline
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 2: Our Core Formula === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-20 md:mt-24 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -110,10 +112,11 @@ const AboutPage = () => {
             playsInline
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 3: The Transitional Subheading (Re-instated) === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-20 md:mt-24 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -128,10 +131,11 @@ const AboutPage = () => {
           Our leadership team combines visionary product engineering with
           decades of strategic experience.
         </p>
-      </motion.section>
+      </Motion>
 
       {/* === Section 4: Meet The Leadership === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -163,10 +167,11 @@ const AboutPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 5: Our Guiding Principles === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-20 md:mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -193,10 +198,11 @@ const AboutPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 6: Join Us CTA === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-20 md:mt-24 bg-card border rounded-lg p-12 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -222,7 +228,7 @@ const AboutPage = () => {
             <Link href="/contact">Start a Project</Link>
           </Button>
         </div>
-      </motion.section>
+      </Motion>
     </PageLayout>
   );
 };

@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { subscribeUser } from "@/app/actions";
@@ -38,7 +38,8 @@ const SubscriptionCTA = () => {
   };
 
   return (
-    <motion.section
+    <Motion
+      type="section"
       className="mt-24 bg-card border rounded-lg p-8 md:p-12"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +87,7 @@ const SubscriptionCTA = () => {
           </form>
         </div>
       </div>
-    </motion.section>
+    </Motion>
   );
 };
 

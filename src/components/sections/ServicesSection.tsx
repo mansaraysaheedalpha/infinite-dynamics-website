@@ -3,7 +3,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { Motion } from "../layout/Motion";
 import { services } from "@/lib/data";
 import { Button } from "../ui/Button";
 import { Parallax } from "react-scroll-parallax";
@@ -27,7 +27,7 @@ const ServicesSection = () => {
             const isReversed = index % 2 === 1;
 
             return (
-              <motion.div
+              <Motion
                 key={service.title}
                 className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24"
                 initial={{ opacity: 0, y: 50 }}
@@ -69,7 +69,7 @@ const ServicesSection = () => {
                     <Link href={`/solutions/${service.slug}`}>Learn More</Link>
                   </Button>
                 </div>
-              </motion.div>
+              </Motion>
             );
           })}
         </div>

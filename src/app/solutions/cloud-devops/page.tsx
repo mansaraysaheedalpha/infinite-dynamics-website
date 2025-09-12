@@ -4,7 +4,7 @@
 
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
 import { FaCloud, FaServer, FaShieldAlt, FaInfinity } from "react-icons/fa";
 import ProjectShowcase from "@/components/sections/ProjectShowcase";
@@ -55,7 +55,8 @@ const CloudDevopsPage = () => {
       subtitle="Building resilient, scalable infrastructure for the modern web."
     >
       {/* === Section 1: The Core Philosophy === */}
-      <motion.section
+      <Motion
+        type="section"
         className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -83,10 +84,11 @@ const CloudDevopsPage = () => {
             playsInline
           />
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 2: Our DevOps Lifecycle === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -115,10 +117,11 @@ const CloudDevopsPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       {/* === Section 3: Platforms We Support === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -143,12 +146,13 @@ const CloudDevopsPage = () => {
             </div>
           ))}
         </div>
-      </motion.section>
+      </Motion>
 
       <ProjectShowcase />
 
       {/* === Section 4: Project Inquiry CTA === */}
-      <motion.section
+      <Motion
+        type="section"
         className="mt-24 bg-card border rounded-lg p-12 text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +166,7 @@ const CloudDevopsPage = () => {
         <Button asChild size="lg" className="mt-6">
           <Link href="/contact">Optimize My Infrastructure</Link>
         </Button>
-      </motion.section>
+      </Motion>
     </PageLayout>
   );
 };
