@@ -6,8 +6,21 @@ import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/Button";
 import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
-import { FaCloud, FaServer, FaShieldAlt, FaInfinity } from "react-icons/fa";
-import ProjectShowcase from "@/components/sections/ProjectShowcase";
+import Image from "next/image";
+import {
+  FaCloud,
+  FaServer,
+  FaShieldAlt,
+  FaInfinity,
+  FaArrowRight,
+  FaArrowDown,
+} from "react-icons/fa";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Data for the Cloud & DevOps page
 const processSteps = [
@@ -37,15 +50,48 @@ const processSteps = [
   },
 ];
 
+// Updated technologies data with correct logo filenames
 const technologies = [
-  "AWS",
-  "Google Cloud",
-  "Azure",
-  "Docker",
-  "Kubernetes",
-  "Terraform",
-  "Jenkins",
-  "GitHub Actions",
+  {
+    name: "AWS",
+    logoUrl: "/tech-logos/aws.png",
+    description: "EC2, S3, Lambda, RDS, VPC",
+  },
+  {
+    name: "Google Cloud",
+    logoUrl: "/tech-logos/google-cloud.png",
+    description: "Compute Engine, Cloud Storage, Cloud Functions",
+  },
+  {
+    name: "Azure",
+    logoUrl: "/tech-logos/azure.png",
+    description: "Virtual Machines, Blob Storage, Azure Functions",
+  },
+  {
+    name: "Docker",
+    logoUrl: "/tech-logos/docker.svg",
+    description: "Containerization & Image Building",
+  },
+  {
+    name: "Kubernetes",
+    logoUrl: "/tech-logos/kubernetes.png",
+    description: "Container Orchestration & Management",
+  },
+  {
+    name: "Terraform",
+    logoUrl: "/tech-logos/terraform.svg",
+    description: "Infrastructure as Code",
+  },
+  {
+    name: "Jenkins",
+    logoUrl: "/tech-logos/jenkins.svg",
+    description: "CI/CD Automation Pipelines",
+  }, // NOTE: Add this logo
+  {
+    name: "GitHub Actions",
+    logoUrl: "/tech-logos/github-actions.svg",
+    description: "Integrated CI/CD & Workflows",
+  }, // NOTE: Add this logo
 ];
 
 const CloudDevopsPage = () => {
@@ -67,17 +113,17 @@ const CloudDevopsPage = () => {
             Infrastructure as Code
           </h2>
           <p className="text-lg text-muted-foreground">
-            We believe that a powerful application is only as strong as its
-            foundation. Our DevOps philosophy centers on automation,
-            reliability, and scalability. We treat infrastructure as code,
-            creating reproducible and resilient systems that allow your
-            development teams to innovate faster and deploy with confidence.
+            A powerful application is only as strong as its foundation. Our
+            DevOps philosophy centers on automation, reliability, and
+            scalability. We treat infrastructure as code, creating reproducible
+            systems that allow your teams to innovate faster and deploy with
+            confidence.
           </p>
         </div>
         <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src="/service-devops.mp4" // Use the DevOps video
+            src="/service-devops.mp4"
             autoPlay
             loop
             muted
@@ -86,7 +132,7 @@ const CloudDevopsPage = () => {
         </div>
       </Motion>
 
-      {/* === Section 2: Our DevOps Lifecycle === */}
+      {/* === Section 2: Visualized DevOps Lifecycle === */}
       <Motion
         type="section"
         className="mt-24"
@@ -97,29 +143,57 @@ const CloudDevopsPage = () => {
       >
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
-            Our Automation Process
+            Our DevOps Lifecycle
           </h2>
           <p className="mt-2 text-lg text-muted-foreground max-w-2xl mx-auto">
-            From code commit to live production, seamlessly.
+            A continuous cycle of innovation and improvement.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {processSteps.map((step) => (
-            <div
-              key={step.title}
-              className="bg-card p-6 rounded-lg border text-center"
-            >
-              <div className="flex justify-center mb-4">{step.icon}</div>
-              <h3 className="text-xl font-semibold text-card-foreground">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-muted-foreground">{step.description}</p>
-            </div>
-          ))}
+
+        <div className="mt-16 max-w-4xl mx-auto relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+            {processSteps.map((step, index) => (
+              <Motion
+                type="div"
+                key={step.title}
+                className="bg-card p-6 rounded-lg border text-center shadow-lg"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex justify-center mb-4">{step.icon}</div>
+                <h3 className="text-xl font-semibold text-card-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-muted-foreground text-sm">
+                  {step.description}
+                </p>
+              </Motion>
+            ))}
+          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
+            <FaArrowRight
+              className="text-gray-300 absolute -top-4 -right-16"
+              size={24}
+            />
+            <FaArrowDown
+              className="text-gray-300 absolute -bottom-16 -right-4 rotate-90"
+              size={24}
+            />
+            <FaArrowRight
+              className="text-gray-300 absolute -bottom-4 -left-16 rotate-180"
+              size={24}
+            />
+            <FaArrowDown
+              className="text-gray-300 absolute -top-16 -left-4 -rotate-90"
+              size={24}
+            />
+          </div>
         </div>
       </Motion>
 
-      {/* === Section 3: Platforms We Support === */}
+      {/* === Section 3: Interactive Tech Stack === */}
       <Motion
         type="section"
         className="mt-24"
@@ -130,25 +204,35 @@ const CloudDevopsPage = () => {
       >
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
-            Platforms We Support
+            Platforms & Technologies
           </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            Multi-cloud and cloud-agnostic solutions.
+            Hover over a logo to see our specific expertise.
           </p>
         </div>
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
-          {technologies.map((tech) => (
-            <div
-              key={tech}
-              className="bg-secondary text-secondary-foreground font-semibold py-2 px-4 rounded-full border"
-            >
-              {tech}
-            </div>
-          ))}
+        <div className="mt-12 flex flex-wrap justify-center items-center gap-x-8 gap-y-6 md:gap-x-12">
+          <TooltipProvider>
+            {technologies.map((tech) => (
+              <Tooltip key={tech.name}>
+                <TooltipTrigger asChild>
+                  <div className="cursor-pointer">
+                    <Image
+                      src={tech.logoUrl}
+                      alt={`${tech.name} logo`}
+                      width={80}
+                      height={80}
+                      className="h-14 w-auto md:h-20 filter grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{tech.description}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </TooltipProvider>
         </div>
       </Motion>
-
-      <ProjectShowcase />
 
       {/* === Section 4: Project Inquiry CTA === */}
       <Motion

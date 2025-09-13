@@ -50,6 +50,7 @@ export const caseStudies: CaseStudy[] = [
       "We leveraged the Bootstrap framework to build a responsive, mobile-first design that looks great on all devices. To enhance the user experience, we implemented custom JavaScript for smooth scrolling and subtle animations, making the site feel interactive and polished. The result is a comprehensive and professional-looking website that serves as an excellent portfolio piece.",
     // This project doesn't have a complex backend, so we omit the 'architectureDetails'
     gallery: ["/work/ecotech-gallery-1.png", "/work/ecotech-gallery-2.png"],
+    liveUrl: "https://mansaraysaheedalpha.github.io/First-Biggest-Project/",
     repoUrl: "https://github.com/mansaraysaheedalpha/First-Biggest-Project",
   },
 ];

@@ -53,15 +53,3 @@ export interface CaseStudy {
   liveUrl?: string;
   repoUrl?: string;
 }
-
-export interface DesignTemplate {
-  id: string;
-  title: string;
-  category: string;
-  imageUrl: string;
-  designDna: {
-    typography: string[];
-    colorPalette: string[];
-    principles: string[];
-  };
-}

@@ -12,8 +12,6 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
-  SheetTitle, // 1. Re-import SheetTitle
-  SheetDescription, // 1. Re-import SheetDescription
 } from "@/components/ui/sheet";
 import {
   Accordion,
@@ -47,7 +45,7 @@ const MobileNav = ({ links }: MobileNavProps) => {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="flex flex-col">
-        <SheetHeader className="flex-row items-center justify-between">
+        <SheetHeader>
           <Link
             href="/"
             className="flex items-center"
@@ -60,17 +58,11 @@ const MobileNav = ({ links }: MobileNavProps) => {
               height={57}
             />
           </Link>
-
-          {/* 2. Add a visually hidden title and description for accessibility */}
-          <div className="sr-only">
-            <SheetTitle>Menu</SheetTitle>
-            <SheetDescription>
-              Main navigation menu for the website.
-            </SheetDescription>
-          </div>
+          {/* We no longer need the hidden title and description here */}
         </SheetHeader>
 
-        <nav className="mt-8 flex flex-1 flex-col justify-between">
+        {/* ✅ FIX: Changed justify-between to justify-start and made it scrollable */}
+        <nav className="mt-6 flex-1 overflow-y-auto">
           <div className="space-y-4">
             {links.map((link) => (
               <button
@@ -87,7 +79,7 @@ const MobileNav = ({ links }: MobileNavProps) => {
             ))}
 
             <div className="sm:hidden">
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="solutions">
                   <AccordionTrigger className="text-xl font-medium">
                     Solutions

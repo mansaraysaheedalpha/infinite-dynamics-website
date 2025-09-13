@@ -1,15 +1,13 @@
 // src/app/solutions/web-development/page.tsx
 
-"use client";
-
 import PageLayout from "@/components/layout/PageLayout";
-import ProjectShowcase from "@/components/sections/ProjectShowcase";
 import { Button } from "@/components/ui/Button";
-import { Motion } from "@/components/layout/Motion";
 import Link from "next/link";
 import { FaSearch, FaPalette, FaCode, FaRocket } from "react-icons/fa";
+import { caseStudies } from "@/lib/work-data";
+import ServiceProjectShowcase from "@/components/solutions/ServiceProjectShowcase";
+import { Motion } from "@/components/layout/Motion"; // 1. Import your custom Motion component
 
-// Data for our sections to keep the JSX clean
 const processSteps = [
   {
     icon: <FaSearch className="h-8 w-8 text-brand-yellow" />,
@@ -49,99 +47,70 @@ const technologies = [
 ];
 
 const WebDevelopmentPage = () => {
+  const relevantProjects = caseStudies.filter(
+    (study) => study.id === "saloneamazon" || study.id === "ecotech"
+  );
+
   return (
     <PageLayout
       title="Web & Mobile Development"
       subtitle="Crafting bespoke digital experiences that drive results."
     >
-      {/* === Section 1: The Core Philosophy === */}
-      <Motion
-        type="section"
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-4">
           <h2 className="text-3xl font-bold text-foreground">
-            {" "}
-            {/* Corrected text color */}
             From Concept to Creation
           </h2>
           <p className="text-lg text-muted-foreground">
-            {" "}
-            {/* Corrected text color */}
             At Infinite Dynamics, we don&apos;t just write code; we architect
             solutions. Our philosophy is rooted in a deep understanding of your
-            business objectives, ensuring that every line of code serves a
-            purpose and every feature delivers value. We build digital products
-            that are not only technically excellent but are also intuitive,
-            engaging, and built to scale.
+            business objectives, ensuring every line of code serves a purpose
+            and every feature delivers value.
           </p>
         </div>
         <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
           <video
-            className="absolute inset-0 w-full h-full object-cover" // The definitive fix for black bars
-            src="/service-web-dev2.mp4" // Using the specific video for this service
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/service-web-dev2.mp4"
             autoPlay
             loop
             muted
             playsInline
           />
         </div>
-      </Motion>
+      </section>
 
-      {/* === Section 2: Our Development Process === */}
-      <Motion
-        type="section"
-        className="mt-24"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8 }}
-      >
+      <section className="mt-24">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
             Our Proven Process
-          </h2>{" "}
-          {/* Corrected text color */}
+          </h2>
           <p className="mt-2 text-lg text-muted-foreground max-w-2xl mx-auto">
-            {" "}
-            {/* Corrected text color */}A transparent and collaborative journey
-            from idea to launch.
+            A transparent and collaborative journey from idea to launch.
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {processSteps.map((step) => (
             <div
               key={step.title}
-              className="bg-brand-secondary p-6 rounded-lg border border-white/10 text-center"
+              className="bg-card p-6 rounded-lg border text-center"
             >
               <div className="flex justify-center mb-4">{step.icon}</div>
-              <h3 className="text-xl font-semibold text-white">{step.title}</h3>
-              <p className="mt-2 text-gray-400">{step.description}</p>
+              <h3 className="text-xl font-semibold text-card-foreground">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-muted-foreground">{step.description}</p>
             </div>
           ))}
         </div>
-      </Motion>
+      </section>
 
-      {/* === Section 3: Technology Showcase === */}
-      <Motion
-        type="section"
-        className="mt-24"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8 }}
-      >
+      <section className="mt-24">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
             Technologies We Master
-          </h2>{" "}
-          {/* Corrected text color */}
+          </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            {" "}
-            {/* Corrected text color */}
             Leveraging the best tools for the job.
           </p>
         </div>
@@ -155,11 +124,21 @@ const WebDevelopmentPage = () => {
             </div>
           ))}
         </div>
-      </Motion>
+      </section>
 
-      <ProjectShowcase />
+      <section className="mt-24">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-foreground">
+            Our Recent Work
+          </h2>
+          <p className="mt-2 text-lg text-muted-foreground">
+            A look at some of the solutions we&apos;ve engineered.
+          </p>
+        </div>
+        <ServiceProjectShowcase projects={relevantProjects} />
+      </section>
 
-      {/* === Section 4: Project Inquiry CTA === */}
+      {/* 2. Replace <motion.section> with your custom <Motion> component */}
       <Motion
         type="section"
         className="mt-24 bg-brand-secondary rounded-lg p-12 text-center"
@@ -170,11 +149,8 @@ const WebDevelopmentPage = () => {
       >
         <h2 className="text-3xl font-bold text-white">
           Have a Project in Mind?
-        </h2>{" "}
-        {/* Corrected text color */}
+        </h2>
         <p className="mt-2 text-lg text-gray-300">
-          {" "}
-          {/* Corrected text color */}
           Let&apos;s discuss how we can bring your vision to life.
         </p>
         <Button asChild size="lg" className="mt-6">

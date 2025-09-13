@@ -3,9 +3,9 @@
 import { Metadata } from "next";
 import FeaturedProjects from "@/components/work/FeaturedProjects";
 import GlobalConnectShowcase from "@/components/work/GlobalConnectShowcase";
-import DesignShowcase from "@/components/work/DesignShowcase"; // 1. Import DesignShowcase
-import { caseStudies } from "@/lib/work-data";
-import { designTemplates } from "@/lib/design-data"; // 2. Import design data
+import DesignShowcase from "@/components/work/DesignShowcase";
+import { caseStudies } from "@/lib/work-data"; // Imports local data
+import { designTemplates } from "@/lib/design-data"; // Imports local data
 
 export const metadata: Metadata = {
   title: "Our Work | Infinite Dynamics",
@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     "Explore the craftsmanship, technology, and strategic thinking behind our world-class software solutions.",
 };
 
+// This is now a simple component, not an async one
 const WorkPage = () => {
   return (
     <div>
-      {/* Hero Section */}
       <section className="relative flex items-center justify-center h-[60vh] text-center text-white overflow-hidden">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
@@ -38,12 +38,10 @@ const WorkPage = () => {
         </div>
       </section>
 
-      {/* GlobalConnect Showcase */}
       <section className="py-24 bg-brand-secondary">
         <GlobalConnectShowcase />
       </section>
 
-      {/* Featured Projects */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center">
@@ -60,15 +58,13 @@ const WorkPage = () => {
         </div>
       </section>
 
-      {/* 3. Add the new Design Studio section */}
       <section className="py-24 bg-card border-t">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h2 className="text-3xl font-bold">The Design Studio</h2>
             <p className="mt-4 text-lg max-w-2xl mx-auto text-muted-foreground">
               Explore our versatile design templates, crafted with creativity
-              and precision. We use these as a starting point to deliver custom,
-              world-class visuals for our clients.
+              and precision.
             </p>
           </div>
           <div className="mt-12">

@@ -36,7 +36,7 @@ const ContactPage = () => {
                 </div>
                 <div className="flex items-center gap-4 drop-shadow-md">
                   <HiOutlineEnvelope className="h-5 w-5" />
-                  <span>info@infinitedynamics.sl</span>
+                  <span>info@infinite-dynamics.com</span>
                 </div>
               </div>
             </div>
@@ -71,16 +71,16 @@ const ContactPage = () => {
               </div>
 
               <div className="mt-4 flex justify-center gap-4 lg:justify-end">
-                <Link href="#" className="hover:text-brand-yellow" legacyBehavior>
+                <Link href="#" className="hover:text-brand-yellow">
                   <FaLinkedin className="h-6 w-6" />
                 </Link>
-                <Link href="#" className="hover:text-brand-yellow" legacyBehavior>
+                <Link href="#" className="hover:text-brand-yellow">
                   <FaXTwitter className="h-6 w-6" />
                 </Link>
-                <Link href="#" className="hover:text-brand-yellow" legacyBehavior>
+                <Link href="#" className="hover:text-brand-yellow">
                   <FaInstagram className="h-6 w-6" />
                 </Link>
-                <Link href="#" className="hover:text-brand-yellow" legacyBehavior>
+                <Link href="#" className="hover:text-brand-yellow">
                   <FaFacebook className="h-6 w-6" />
                 </Link>
               </div>

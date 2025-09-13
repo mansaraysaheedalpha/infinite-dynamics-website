@@ -12,9 +12,14 @@ import {
   FaCertificate,
   FaBrain,
 } from "react-icons/fa";
-import ProjectShowcase from "@/components/sections/ProjectShowcase";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-// Data for the Corporate Training page
+// Data for the learning framework section
 const processSteps = [
   {
     icon: <FaUsers className="h-8 w-8 text-brand-yellow" />,
@@ -42,15 +47,52 @@ const processSteps = [
   },
 ];
 
-const technologies = [
-  "Web Development Fundamentals",
-  "Advanced React & Next.js",
-  "UI/UX Design Principles",
-  "Cloud Essentials (AWS)",
-  "DevOps & CI/CD",
-  "Agile Project Management",
-  "Data Structures & Algorithms",
-  "Microsoft Office Suite",
+// Data for the interactive curriculum explorer
+const trainingAreas = [
+  {
+    id: "web-dev",
+    title: "Web Development Fundamentals",
+    description:
+      "Master the building blocks of the modern web, from semantic HTML and responsive CSS to core JavaScript concepts.",
+    outcomes: [
+      "Build static and dynamic websites",
+      "Understand the DOM",
+      "Master CSS Flexbox & Grid",
+    ],
+  },
+  {
+    id: "react-next",
+    title: "Advanced React & Next.js",
+    description:
+      "Dive deep into the most powerful frontend framework. Learn about hooks, state management, and server-side rendering with Next.js.",
+    outcomes: [
+      "Build complex SPAs",
+      "Optimize performance with SSR",
+      "Manage state with Redux Toolkit",
+    ],
+  },
+  {
+    id: "ui-ux",
+    title: "UI/UX Design Principles",
+    description:
+      "Learn the fundamentals of user-centric design, from wireframing and prototyping in Figma to creating intuitive user flows.",
+    outcomes: [
+      "Conduct user research",
+      "Create high-fidelity prototypes",
+      "Understand accessibility standards",
+    ],
+  },
+  {
+    id: "cloud-aws",
+    title: "Cloud Essentials (AWS)",
+    description:
+      "An introduction to cloud computing. Understand core AWS services like EC2, S3, and Lambda to build and deploy scalable applications.",
+    outcomes: [
+      "Host applications on AWS",
+      "Understand serverless architecture",
+      "Manage cloud storage and databases",
+    ],
+  },
 ];
 
 const CorporateTrainingPage = () => {
@@ -82,7 +124,7 @@ const CorporateTrainingPage = () => {
         <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src="/service-training.mp4" // Use the training video
+            src="/service-training.mp4"
             autoPlay
             loop
             muted
@@ -91,7 +133,7 @@ const CorporateTrainingPage = () => {
         </div>
       </Motion>
 
-      {/* === Section 2: Our Training Methodology === */}
+      {/* === Section 2: Our Learning Framework === */}
       <Motion
         type="section"
         className="mt-24"
@@ -124,7 +166,7 @@ const CorporateTrainingPage = () => {
         </div>
       </Motion>
 
-      {/* === Section 3: Core Training Areas === */}
+      {/* === Section 3: Interactive Curriculum Explorer === */}
       <Motion
         type="section"
         className="mt-24"
@@ -135,25 +177,32 @@ const CorporateTrainingPage = () => {
       >
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
-            Core Training Areas
+            Explore Our Curriculum
           </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            From technical skills to design thinking.
+            Click on a topic to see the key learning outcomes.
           </p>
         </div>
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
-          {technologies.map((tech) => (
-            <div
-              key={tech}
-              className="bg-secondary text-secondary-foreground font-semibold py-2 px-4 rounded-full border"
-            >
-              {tech}
-            </div>
-          ))}
+        <div className="mt-12 max-w-4xl mx-auto">
+          <Accordion type="single" collapsible className="w-full">
+            {trainingAreas.map((area) => (
+              <AccordionItem key={area.id} value={area.id}>
+                <AccordionTrigger className="text-xl font-semibold hover:no-underline text-left">
+                  {area.title}
+                </AccordionTrigger>
+                <AccordionContent className="pt-2">
+                  <p className="text-muted-foreground">{area.description}</p>
+                  <ul className="mt-4 list-disc list-inside space-y-1 text-muted-foreground">
+                    {area.outcomes.map((outcome) => (
+                      <li key={outcome}>{outcome}</li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </Motion>
-
-      <ProjectShowcase />
 
       {/* === Section 4: Project Inquiry CTA === */}
       <Motion

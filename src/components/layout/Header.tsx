@@ -41,22 +41,21 @@ const Header = () => {
           />
         </Link>
 
-        {/* === Desktop Navigation === */}
         <div className="hidden flex-1 items-center justify-end gap-x-8 lg:flex">
           <NavigationMenu>
             <NavigationMenuList>
               {navLinks.map((link) => (
                 <NavigationMenuItem key={link.href}>
-                  {/* ✅ FIX: NavigationMenuLink is now the parent with asChild */}
                   <NavigationMenuLink asChild>
                     <Link
                       href={link.href}
                       className={cn(
                         "group relative inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-base font-semibold text-brand-secondary transition-colors hover:bg-accent hover:text-brand-primary focus:outline-none",
+                        // ✅ FIX: Changed 'group-hover' to just 'hover'
                         "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-brand-yellow after:transition-transform after:duration-300",
                         pathname === link.href
-                          ? "after:scale-x-100" // Active link underline
-                          : "after:scale-x-0 group-hover:after:scale-x-100" // Hover underline
+                          ? "after:scale-x-100"
+                          : "after:scale-x-0 hover:after:scale-x-100"
                       )}
                     >
                       {link.label}
@@ -90,7 +89,6 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* === Mobile Navigation === */}
         <div className="flex items-center gap-2 lg:hidden">
           <div className="hidden sm:flex">
             <NavigationMenu>

@@ -22,7 +22,7 @@ const teamMembers = [
     role: "Co-Founder & Chairman",
     location: "United States",
     bio: "The strategic mind guiding our global vision. With decades of experience in leadership and strategy, Alpha provides the foundational wisdom and direction that steers our company towards sustainable growth and international impact.",
-    image: "/alpha-mansaray-chairman.png",
+    image: "/alpha-mansaray-chairman.jpg",
   },
 ];
 

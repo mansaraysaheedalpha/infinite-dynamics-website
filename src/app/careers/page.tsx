@@ -7,9 +7,9 @@ import { FaLightbulb, FaMountain, FaBolt } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Metadata } from "next";
-import { SanityJob } from "@/types"; // 1. Import our SanityJob type
+import { SanityJob } from "@/types";
+import Image from "next/image"; // Import the Image component
 
-// SEO & Metadata
 export const metadata: Metadata = {
   title: "Careers | Infinite Dynamics",
   description:
@@ -17,13 +17,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Careers | Infinite Dynamics",
     description: "Join our mission to build the future of technology.",
-    images: [
-      { url: "/careers-hero.png" }, // Make sure this image exists in /public
-    ],
+    images: [{ url: "/careers-hero.png" }],
   },
 };
 
-// Use a more specific query to only get the fields we need for the listing
 const jobsQuery = `*[_type == "job"] | order(_createdAt desc) {
   _id,
   title,
@@ -37,14 +34,38 @@ const values = [
   {
     icon: <FaLightbulb className="h-8 w-8 text-brand-yellow" />,
     title: "Insatiable Curiosity",
+    description:
+      "We are driven by the question 'what if?' We provide learning stipends and encourage our team to explore new technologies on company time.",
   },
   {
     icon: <FaMountain className="h-8 w-8 text-brand-yellow" />,
     title: "Unyielding Perseverance",
+    description:
+      "We believe the most rewarding challenges are the hardest. We face complexity with grit and determination until excellence is achieved.",
   },
   {
     icon: <FaBolt className="h-8 w-8 text-brand-yellow" />,
     title: "Passionate Hard Work",
+    description:
+      "Our passion for technology is matched by our dedication to our craft. We are builders at heart, committed to delivering exceptional results.",
+  },
+];
+
+// ✅ NEW: Data for the "Meet the Team" section
+const teamMembers = [
+  {
+    name: "Saheed Alpha Mansaray",
+    role: "Co-Founder & CEO",
+    image: "/saheed-mansaray-ceo.jpg",
+    quote:
+      "We're not just building software; we're building opportunities. The most exciting part of my day is collaborating with the team to solve a problem that hasn't been solved before.",
+  },
+  {
+    name: "Alpha Saheed Mansaray",
+    role: "Co-Founder & Chairman",
+    image: "/alpha-mansaray-chairman.jpg",
+    quote:
+      "Our vision is global, but our foundation is people. Investing in our team's growth and well-being is the most critical component of our long-term strategy and success.",
   },
 ];
 
@@ -53,6 +74,7 @@ const CareersPage = async () => {
 
   return (
     <div>
+      {/* --- Hero Section --- */}
       <section className="relative h-[60vh] w-full overflow-hidden">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
@@ -69,7 +91,6 @@ const CareersPage = async () => {
             Build the Future With Us
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-gray-300 drop-shadow-sm">
-            {/* 3. Fixed unescaped apostrophes */}
             We&apos;re looking for passionate minds to join our mission and
             shape the future of technology, from Freetown to the world.
           </p>
@@ -77,7 +98,7 @@ const CareersPage = async () => {
       </section>
 
       <main className="container mx-auto py-16 md:py-24 px-4 sm:px-6 lg:px-8">
-        {/* Employer Branding Section */}
+        {/* --- Why Join Us Section --- */}
         <section className="text-center">
           <h2 className="text-3xl font-bold text-foreground">
             Why Join Infinite Dynamics?
@@ -96,11 +117,54 @@ const CareersPage = async () => {
                 <h3 className="text-xl font-semibold text-card-foreground">
                   {value.title}
                 </h3>
+                <p className="mt-2 text-muted-foreground text-sm">
+                  {value.description}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
+        {/* ✅ NEW: Meet the Team Section */}
+        <section className="mt-24">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-foreground">
+              Meet Some of the Team
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              We are a collective of strategists, engineers, and designers
+              passionate about building what&apos;s next.
+            </p>
+          </div>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {teamMembers.map((member) => (
+              <div key={member.name} className="bg-card p-6 rounded-lg border">
+                <div className="flex items-center gap-6">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={80}
+                    height={80}
+                    className="rounded-full w-20 h-20 object-cover"
+                  />
+                  <div>
+                    <h3 className="text-xl font-bold text-card-foreground">
+                      {member.name}
+                    </h3>
+                    <p className="text-brand-yellow font-semibold">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+                <blockquote className="mt-6 border-l-4 border-brand-yellow pl-4 text-muted-foreground italic">
+                  &quot;{member.quote}&quot;
+                </blockquote>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* --- Open Positions Section --- */}
         <section id="open-positions" className="mt-24 scroll-mt-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground">
@@ -115,6 +179,7 @@ const CareersPage = async () => {
 
         <CultureSection />
 
+        {/* --- CTA Section --- */}
         <section className="mt-24 bg-card border rounded-lg p-12 text-center">
           <h2 className="text-3xl font-bold text-foreground">
             Don&apos;t See a Role For You?

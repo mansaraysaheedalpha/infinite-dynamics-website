@@ -14,8 +14,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TemplateCustomizer from "./TemplateCustomizer";
 
 interface DesignShowcaseProps {
   templates: DesignTemplate[];
@@ -83,103 +81,79 @@ const DesignShowcase = ({ templates }: DesignShowcaseProps) => {
         </AnimatePresence>
       </div>
 
+      {/* Simplified "Design DNA" Modal */}
       <Dialog
         open={!!selectedTemplate}
         onOpenChange={(isOpen) => !isOpen && setSelectedTemplate(null)}
       >
-        {/* ✅ FIX: Added flexbox classes to control height and scrolling */}
-        <DialogContent className="max-w-6xl w-[95%] h-[90vh] flex flex-col">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           {selectedTemplate && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-2xl">
+                <DialogTitle className="text-2xl md:text-3xl font-bold">
                   {selectedTemplate.title}
                 </DialogTitle>
                 <DialogDescription>
                   {selectedTemplate.category}
                 </DialogDescription>
               </DialogHeader>
-              <Tabs
-                defaultValue="details"
-                className="w-full flex-1 flex flex-col min-h-0"
-              >
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="details">Details</TabsTrigger>
-                  <TabsTrigger
-                    value="customize"
-                    disabled={selectedTemplate.id !== "recruitment-01"}
-                  >
-                    Customize
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent
-                  value="details"
-                  className="mt-4 flex-1 overflow-y-auto"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="relative aspect-[4/3] w-full rounded-md overflow-hidden">
-                      <Image
-                        src={selectedTemplate.imageUrl}
-                        alt={selectedTemplate.title}
-                        fill
-                        className="object-contain"
-                      />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+                <div className="relative aspect-[4/3] w-full rounded-md overflow-hidden">
+                  <Image
+                    src={selectedTemplate.imageUrl}
+                    alt={selectedTemplate.title}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-lg text-foreground">
+                      Design DNA
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      The core elements that bring this design to life.
+                    </p>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium">Typography</h4>
+                      <p className="text-muted-foreground text-sm">
+                        {selectedTemplate.designDna.typography.join(" / ")}
+                      </p>
                     </div>
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="font-semibold text-lg text-foreground">
-                          Design DNA
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          The core elements that bring this design to life.
-                        </p>
+                    <div>
+                      <h4 className="font-medium">Color Palette</h4>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {selectedTemplate.designDna.colorPalette.map(
+                          (color) => (
+                            <div
+                              key={color}
+                              className="flex items-center gap-2"
+                            >
+                              <div
+                                className="h-5 w-5 rounded-full border"
+                                style={{ backgroundColor: color }}
+                              />
+                              <span className="text-sm font-mono">{color}</span>
+                            </div>
+                          )
+                        )}
                       </div>
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-medium">Typography</h4>
-                          <p className="text-muted-foreground text-sm">
-                            {selectedTemplate.designDna.typography.join(" / ")}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-medium">Color Palette</h4>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {selectedTemplate.designDna.colorPalette.map(
-                              (color) => (
-                                <div
-                                  key={color}
-                                  className="flex items-center gap-2"
-                                >
-                                  <div
-                                    className="h-5 w-5 rounded-full border"
-                                    style={{ backgroundColor: color }}
-                                  />
-                                  <span className="text-sm font-mono">
-                                    {color}
-                                  </span>
-                                </div>
-                              )
-                            )}
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium">Principles</h4>
-                          <ul className="list-disc list-inside text-muted-foreground text-sm space-y-1 mt-2">
-                            {selectedTemplate.designDna.principles.map(
-                              (principle) => (
-                                <li key={principle}>{principle}</li>
-                              )
-                            )}
-                          </ul>
-                        </div>
-                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">Principles</h4>
+                      <ul className="list-disc list-inside text-muted-foreground text-sm space-y-1 mt-2">
+                        {selectedTemplate.designDna.principles.map(
+                          (principle) => (
+                            <li key={principle}>{principle}</li>
+                          )
+                        )}
+                      </ul>
                     </div>
                   </div>
-                </TabsContent>
-                <TabsContent value="customize" className="mt-4 flex-1 min-h-0">
-                  <TemplateCustomizer />
-                </TabsContent>
-              </Tabs>
+                </div>
+              </div>
             </>
           )}
         </DialogContent>

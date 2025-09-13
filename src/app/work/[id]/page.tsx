@@ -4,7 +4,7 @@ import { caseStudies } from "@/lib/work-data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Metadata } from "next";
-import { ExternalLink, Layers, Palette, ImageIcon } from "lucide-react";
+import { ExternalLink, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Motion } from "@/components/layout/Motion";
 
@@ -31,7 +31,7 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="bg-background">
-      {/* === Section 1: Immersive Hero === */}
+      {/* ... Hero Section ... */}
       <section className="relative h-[60vh] w-full">
         <Image
           src={study.imageUrl}
@@ -49,20 +49,46 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
         </div>
       </section>
 
-      {/* === Section 2: Project Overview === */}
+      {/* === Project Overview === */}
       <section className="py-16 md:py-24 border-b">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold text-foreground">
-                Project Brief
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                {study.overview}
-              </p>
+            <div className="lg:col-span-2 space-y-12">
+              <div>
+                <h2 className="text-3xl font-bold text-foreground">
+                  Project Brief
+                </h2>
+                <p className="mt-4 text-lg text-muted-foreground">
+                  {study.overview}
+                </p>
+              </div>
+              {/* Conditionally render deep-dive sections */}
+              {study.architectureDetails && (
+                <div>
+                  <h2 className="text-3xl font-bold text-foreground">
+                    Architecting for Scale
+                  </h2>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                    {study.architectureDetails}
+                  </p>
+                </div>
+              )}
+              {study.designDetails && (
+                <div>
+                  <h2 className="text-3xl font-bold text-foreground">
+                    Design & User Experience
+                  </h2>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                    {study.designDetails}
+                  </p>
+                </div>
+              )}
             </div>
             <aside className="lg:col-span-1">
               <div className="sticky top-28 bg-card border rounded-lg p-6 space-y-4">
+                <h3 className="text-xl font-semibold text-card-foreground">
+                  Project Details
+                </h3>
                 <div>
                   <h4 className="font-semibold text-card-foreground">
                     Services
@@ -86,8 +112,8 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
                     ))}
                   </div>
                 </div>
+                {/* ✅ This block renders the buttons */}
                 <div className="flex flex-col gap-4 border-t pt-4">
-                  {/* ✅ ADDED "View Live Project" button */}
                   {study.liveUrl && study.liveUrl !== "#" && (
                     <Button asChild className="w-full">
                       <a
@@ -95,8 +121,7 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        View Live Project{" "}
-                        <ExternalLink className="ml-2 h-4 w-4" />
+                        View Live Site <ExternalLink className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
                   )}
@@ -119,42 +144,9 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
         </div>
       </section>
 
-      {/* Conditionally render deep-dive sections */}
-      {study.architectureDetails && (
-        <section className="py-16 md:py-24 bg-card border-b">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <Layers className="mx-auto h-12 w-12 text-brand-yellow" />
-              <h2 className="mt-4 text-3xl font-bold text-foreground">
-                Architecting for Scale
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                {study.architectureDetails}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {study.designDetails && (
-        <section className="py-16 md:py-24 border-b">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <Palette className="mx-auto h-12 w-12 text-brand-yellow" />
-              <h2 className="mt-4 text-3xl font-bold text-foreground">
-                Design & User Experience
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                {study.designDetails}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ✅ ADDED Gallery Section */}
+      {/* Gallery Section */}
       {study.gallery && study.gallery.length > 0 && (
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 border-b">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <ImageIcon className="mx-auto h-12 w-12 text-brand-yellow" />
